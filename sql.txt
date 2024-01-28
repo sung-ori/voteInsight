@@ -1,0 +1,63 @@
+
+-- 유저 테이블
+CREATE TABLE USER (
+    USERIDX                 NUMBER          PRIMARY KEY,                -- 인덱스, PK
+    NAME                    VARCHAR2(20)    NOT NULL,                   -- 이름
+    STUDENTID               VARCHAR2(20)    NOT NULL,                   -- 학번
+    PASSWORD                VARCHAR2(250)   NOT NULL,                   -- 비밀번호
+    GROUP_NAME              VARCHAR2(50)    NOT NULL,                   -- 그룹 이름 (group이 오라클 예약어)
+    PHONE                   VARCHAR2(50)    NOT NULL,                   -- 전화번호
+    GRADE                   NUMBER          NOT NULL,                   -- 학년
+    ROLE_NAME               VARCHAR2(20)    DEFAULT 'ROLE_GUEST',       -- 권한 ROLE_GUEST = 손님, ROLE_USER = 투표자, ROLE_ADMIN = 관리자
+    AVAILABLE               CHAR(1)         DEFAULT 'Y'                 -- 계정 활성화 상태 (기능 확장을 대비한 컬럼)
+);
+
+-- 선거 테이블
+CREATE TABLE ELECTION (
+    ELECTIONIDX         NUMBER          PRIMARY KEY,                 -- 인덱스, PK
+    TITLE               VARCHAR2(500)   NOT NULL,                    -- 선거의 제목
+    GROUP_NAME               VARCHAR2(50)    NOT NULL,               -- 선거 대상 그룹
+    POSTERPATH          VARCHAR2(500)   NOT NULL,                    -- 선거 포스터 이미지 경로
+    PROGRESS            CHAR(1)         DEFAULT '0',                 -- 선거의 진행 상태 0 = 준비중, 1 = 진행중, 2 = 선거종료 열람 가능, 3 = 선거 종료 열람 만료
+    CREATEDATE          DATE            DEFAULT SYSDATE,             -- 선거가 등록된 날짜
+    -- 자동 만료 확장을 위한 컬럼
+    STARTDATE           DATE,                                        -- 선거가 시작하는 날짜
+    DAELINE             DATE,                                        -- 선거가 끝나는 날짜
+    ENDDATE             DATE                                         -- 열람 만료일
+);
+
+-- 후보 테이블
+CREATE TABLE CANDIDATE (
+    CANDIDATEIDX        NUMBER          PRIMARY KEY,                -- 인덱스, PK
+    USERIDX             NUMBER,                                     -- 후보의 유저 정보, FK
+    ELECTIONIDX         NUMBER,                                     -- 출마한 선거의 정보 , FK
+    CANDINUMBER         NUMBER          NOT NULL,                   -- 후보 번호 ex : 기호1번, 기호 2번,,,
+    IMGPATH             VARCHAR2(500),                              -- 후보 이미지 경로
+    -- 외래키 참조
+    FOREIGN KEY (USERIDX)       REFERENCES USER     (USERIDX),
+    FOREIGN KEY (ELECTIONIDX)   REFERENCES ELECTION (ELECTIONIDX)
+);
+
+-- 표 테이블
+CREATE TABLE VOTE (
+    VOTEIDX         NUMBER          PRIMARY KEY,                    -- 인덱스, PK
+    ELECTIONIDX     NUMBER,                                         -- 선거의 인덱스, FK
+    CADIDATEIDX     NUMBER,                                         -- 후보의 인덱스, FK
+    USERIDX         NUMBER,                                         -- 투표자의 유저 정보, FK
+    VOTETIME        DATE            DEFAULT SYSDATE,                -- 투표 한 시간
+    IP              VARCHAR2(200),                                  -- 투표한 장소의 ip 주소
+    -- 외래키 참조
+    FOREIGN KEY (ELECTIONIDX)       REFERENCES ELECTION         (ELECTIONIDX)
+    FOREIGN KEY (CANDIDATEIDX)      REFERENCES CANDIDATE        (CANDIDATEIDX),
+    FOREIGN KEY (USERIDX)           REFERENCES USER             (USERIDX)
+);
+
+-- 공지사항 테이블
+CREATE TABLE BOARD (
+    BOARDIDX        NUMBER          PRIMARY KEY,                    -- 인덱스, PK
+    TITLE           VARCHAR2(500)   NOT NULL,                       -- 제목
+    CONTENTS        VARCHAR2(9999)  NOT NULL,                       -- 본문
+    USERNAME        VARCHAR2(20)    NOT NULL,                       -- 작성자 이름
+    CREATETIME      DATE            DEFAULT SYSDATE,                -- 작성 시간
+    UPDATETIME      DATE                                            -- 수정 시간
+);
