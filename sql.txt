@@ -5,10 +5,10 @@ CREATE TABLE USER (
     NAME                    VARCHAR2(20)    NOT NULL,                   -- 이름
     STUDENTID               VARCHAR2(20)    NOT NULL,                   -- 학번
     PASSWORD                VARCHAR2(250)   NOT NULL,                   -- 비밀번호
-    GROUP_NAME              VARCHAR2(50)    NOT NULL,                   -- 그룹 이름 (group이 오라클 예약어)
+    GROUPTYPE               VARCHAR2(50)    NOT NULL,                   -- 그룹 이름 (group이 오라클 예약어)
     PHONE                   VARCHAR2(50)    NOT NULL,                   -- 전화번호
     GRADE                   NUMBER          NOT NULL,                   -- 학년
-    ROLE_NAME               VARCHAR2(20)    DEFAULT 'ROLE_GUEST',       -- 권한 ROLE_GUEST = 손님, ROLE_USER = 투표자, ROLE_ADMIN = 관리자
+    ROLETYPE                VARCHAR2(20)    DEFAULT 'ROLE_GUEST',       -- 권한 ROLE_GUEST = 손님, ROLE_USER = 투표자, ROLE_ADMIN = 관리자
     AVAILABLE               CHAR(1)         DEFAULT 'Y'                 -- 계정 활성화 상태 (기능 확장을 대비한 컬럼)
 );
 
