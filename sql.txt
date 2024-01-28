@@ -16,7 +16,7 @@ CREATE TABLE USER (
 CREATE TABLE ELECTION (
     ELECTIONIDX         NUMBER          PRIMARY KEY,                 -- 인덱스, PK
     TITLE               VARCHAR2(500)   NOT NULL,                    -- 선거의 제목
-    GROUP_NAME               VARCHAR2(50)    NOT NULL,               -- 선거 대상 그룹
+    GROUPTYPE           VARCHAR2(50)    NOT NULL,                    -- 선거 대상 그룹
     POSTERPATH          VARCHAR2(500)   NOT NULL,                    -- 선거 포스터 이미지 경로
     PROGRESS            CHAR(1)         DEFAULT '0',                 -- 선거의 진행 상태 0 = 준비중, 1 = 진행중, 2 = 선거종료 열람 가능, 3 = 선거 종료 열람 만료
     CREATEDATE          DATE            DEFAULT SYSDATE,             -- 선거가 등록된 날짜
