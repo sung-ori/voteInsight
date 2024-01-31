@@ -3,6 +3,8 @@ package com.kisscotp.voteInsight.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.kisscotp.voteInsight.domain.Users;
+import java.util.List;
+
 /*
  * JpaReopsitory가 제공하는 기본 메서드
  * 
@@ -17,5 +19,5 @@ import com.kisscotp.voteInsight.domain.Users;
  */
 public interface UsersRepository extends JpaRepository<Users, Long> {
     
-   
+    Users findByStudentid(String studentid);
 }

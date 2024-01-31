@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -27,13 +29,36 @@ public class WebSecutiryConfig {
         )
         .cors((corsConfig) ->
             corsConfig.disable()
-        )
+        );
+
+        http
         .authorizeHttpRequests(request -> request
-        
-            // .dispatcherTypeMatchers(DispatchType.FORWARD).permitAll()
-            .requestMatchers("/**").permitAll()// 일단 모든 페이지 접근 가능하게 설정
+            .requestMatchers("/**").permitAll()// 일단 모든 경로 접근 가능하게 설정
             .anyRequest().authenticated()
         );
+
+        http
+        .formLogin(login -> login
+        .loginPage("/loginForm")
+        .loginProcessingUrl("/user/login")
+        // .usernameParameter("studentId")
+        // .passwordParameter("password")
+        .defaultSuccessUrl("/",true)
+        .permitAll()
+        );
+        
+        http
+        .logout(logout -> logout
+        .logoutUrl("/logout")
+        .logoutSuccessUrl("/")
+        );
+
         return http.build();
+    }
+
+    // 패스워드 인코더
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

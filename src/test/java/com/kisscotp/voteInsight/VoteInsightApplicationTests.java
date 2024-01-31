@@ -9,7 +9,7 @@ import com.kisscotp.voteInsight.domain.Users;
 import com.kisscotp.voteInsight.domain.enums.GroupType;
 import com.kisscotp.voteInsight.domain.enums.RoleType;
 import com.kisscotp.voteInsight.repository.BoardRepository;
-import com.kisscotp.voteInsight.repository.UsersRepository;
+import com.kisscotp.voteInsight.service.UserService;
 
 @SpringBootTest
 class VoteInsightApplicationTests {
@@ -18,8 +18,9 @@ class VoteInsightApplicationTests {
 	void contextLoads() {
 	}
 	
+	
 	@Autowired
-	UsersRepository usersRepo;
+	UserService userService;
 
 	@Autowired
 	BoardRepository boardRepo;
@@ -30,13 +31,13 @@ class VoteInsightApplicationTests {
 		// 2. 오라클은 시퀀스 방식이다.
 		Users user = new Users();
 
-		user.setName("박수한무");
-		user.setStudentid("201808404");
+		user.setName("김수한무");
+		user.setStudentid("000011000");
 		user.setGrade(1L);
 		user.setGrouptype(GroupType.ACCOUNTING);
 		user.setPassword("1234");
 		user.setPhone("01012345678");
-		user.setRoletype(RoleType.GUEST);
+		user.setRoletype(RoleType.ADMIN);
 		user.setAvailable("Y");
 
 		this.usersRepo.save(user);
@@ -51,6 +52,22 @@ class VoteInsightApplicationTests {
 		b.setUsername("ㅎㅎㅎ");
 
 		boardRepo.save(b);
+		
+	}
+
+	@Test
+	void joinTest() {
+		Users user = new Users();
+
+		user.setName("가입테스트1");
+		user.setStudentid("201803404");
+		user.setGrade(1L);
+		user.setGrouptype(GroupType.ELECTRONICENGINEERING);
+		user.setPassword("1234");
+		user.setPhone("01012345678");
+		user.setRoletype(RoleType.GUEST);
+		user.setAvailable("Y");
+		userService.save(user);
 		
 	}
 }
