@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "vote")
+@Table(name = "vi_vote")
 @Getter
 @Setter
 @NoArgsConstructor

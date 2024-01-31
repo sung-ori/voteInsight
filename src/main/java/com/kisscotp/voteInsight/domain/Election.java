@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "election")
+@Table(name = "vi_election")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -36,8 +36,6 @@ public class Election {
     @Column
     private GroupType       grouptype;      // 투표 대상 그룹
 
-    @Column
-    @Enumerated(EnumType.STRING)
     private String          posterpath;     // 포스터 경로
 
     @Column

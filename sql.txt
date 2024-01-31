@@ -1,6 +1,6 @@
 
 -- 유저 테이블
-CREATE TABLE USER (
+CREATE TABLE VI_USERS (
     USERIDX                 NUMBER          PRIMARY KEY,                -- 인덱스, PK
     NAME                    VARCHAR2(20)    NOT NULL,                   -- 이름
     STUDENTID               VARCHAR2(20)    NOT NULL,                   -- 학번
@@ -13,7 +13,7 @@ CREATE TABLE USER (
 );
 
 -- 선거 테이블
-CREATE TABLE ELECTION (
+CREATE TABLE VI_ELECTION (
     ELECTIONIDX         NUMBER          PRIMARY KEY,                 -- 인덱스, PK
     TITLE               VARCHAR2(500)   NOT NULL,                    -- 선거의 제목
     GROUPTYPE           VARCHAR2(50)    NOT NULL,                    -- 선거 대상 그룹
@@ -27,37 +27,48 @@ CREATE TABLE ELECTION (
 );
 
 -- 후보 테이블
-CREATE TABLE CANDIDATE (
+CREATE TABLE VI_CANDIDATE (
     CANDIDATEIDX        NUMBER          PRIMARY KEY,                -- 인덱스, PK
     USERIDX             NUMBER,                                     -- 후보의 유저 정보, FK
     ELECTIONIDX         NUMBER,                                     -- 출마한 선거의 정보 , FK
     CANDINUMBER         NUMBER          NOT NULL,                   -- 후보 번호 ex : 기호1번, 기호 2번,,,
     IMGPATH             VARCHAR2(500),                              -- 후보 이미지 경로
     -- 외래키 참조
-    FOREIGN KEY (USERIDX)       REFERENCES USER     (USERIDX),
-    FOREIGN KEY (ELECTIONIDX)   REFERENCES ELECTION (ELECTIONIDX)
+    FOREIGN KEY (USERIDX)       REFERENCES VI_USERS     (USERIDX),
+    FOREIGN KEY (ELECTIONIDX)   REFERENCES VI_ELECTION (ELECTIONIDX)
 );
 
 -- 표 테이블
-CREATE TABLE VOTE (
+CREATE TABLE VI_VOTE (
     VOTEIDX         NUMBER          PRIMARY KEY,                    -- 인덱스, PK
     ELECTIONIDX     NUMBER,                                         -- 선거의 인덱스, FK
-    CADIDATEIDX     NUMBER,                                         -- 후보의 인덱스, FK
+    CANDIDATEIDX     NUMBER,                                         -- 후보의 인덱스, FK
     USERIDX         NUMBER,                                         -- 투표자의 유저 정보, FK
     VOTETIME        DATE            DEFAULT SYSDATE,                -- 투표 한 시간
     IP              VARCHAR2(200),                                  -- 투표한 장소의 ip 주소
     -- 외래키 참조
-    FOREIGN KEY (ELECTIONIDX)       REFERENCES ELECTION         (ELECTIONIDX)
-    FOREIGN KEY (CANDIDATEIDX)      REFERENCES CANDIDATE        (CANDIDATEIDX),
-    FOREIGN KEY (USERIDX)           REFERENCES USER             (USERIDX)
+    FOREIGN KEY (ELECTIONIDX)       REFERENCES VI_ELECTION         (ELECTIONIDX),
+    FOREIGN KEY (CANDIDATEIDX)      REFERENCES VI_CANDIDATE        (CANDIDATEIDX),
+    FOREIGN KEY (USERIDX)           REFERENCES VI_USERS            (USERIDX)
 );
 
 -- 공지사항 테이블
-CREATE TABLE BOARD (
+CREATE TABLE VI_BOARD (
     BOARDIDX        NUMBER          PRIMARY KEY,                    -- 인덱스, PK
     TITLE           VARCHAR2(500)   NOT NULL,                       -- 제목
-    CONTENTS        VARCHAR2(9999)  NOT NULL,                       -- 본문
+    CONTENTS        VARCHAR2(2000)  NOT NULL,                       -- 본문
     USERNAME        VARCHAR2(20)    NOT NULL,                       -- 작성자 이름
     CREATETIME      DATE            DEFAULT SYSDATE,                -- 작성 시간
     UPDATETIME      DATE                                            -- 수정 시간
 );
+
+    -- 유저 시퀀스
+        CREATE SEQUENCE VI_USERS_SEQ START WITH 1 INCREMENT BY 1;
+    -- 선거 시퀀스
+        CREATE SEQUENCE VI_ELECTION_SEQ START WITH 1 INCREMENT BY 1;
+    -- 후보 시퀀스
+        CREATE SEQUENCE VI_CANDIDATE_SEQ START WITH 1 INCREMENT BY 1;
+    -- 표 시퀀스
+        CREATE SEQUENCE VI_VOTE_SEQ START WITH 1 INCREMENT BY 1;
+    -- 공지사항 시퀀스
+        CREATE SEQUENCE VI_BOARD_SEQ START WITH 1 INCREMENT BY 1;

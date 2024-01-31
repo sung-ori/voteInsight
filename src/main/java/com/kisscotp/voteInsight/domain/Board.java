@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "board")
+@Table(name = "vi_board")
 @Getter
 @Setter
 @NoArgsConstructor
