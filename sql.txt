@@ -8,7 +8,7 @@ CREATE TABLE USER (
     GROUPTYPE               VARCHAR2(50)    NOT NULL,                   -- 그룹 이름 (group이 오라클 예약어)
     PHONE                   VARCHAR2(50)    NOT NULL,                   -- 전화번호
     GRADE                   NUMBER          NOT NULL,                   -- 학년
-    ROLETYPE                VARCHAR2(20)    DEFAULT 'ROLE_GUEST',       -- 권한 ROLE_GUEST = 손님, ROLE_USER = 투표자, ROLE_ADMIN = 관리자
+    ROLETYPE                VARCHAR2(20)    DEFAULT 'GUEST',            -- 권한 GUEST = 손님, USER = 투표자, ADMIN = 관리자
     AVAILABLE               CHAR(1)         DEFAULT 'Y'                 -- 계정 활성화 상태 (기능 확장을 대비한 컬럼)
 );
 
