@@ -11,6 +11,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +20,12 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "vi_election")
+@SequenceGenerator(
+    name = "election_seq",              // 임의로 정하는 jpa에서 부를 이름
+    sequenceName = "VI_ELECTION_SEQ",   // 실제 DB의 사용할 시퀀스 이름
+    initialValue = 1,                   // 초기값
+    allocationSize = 1                  // 한번에 할당받을 값의 갯수
+)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,7 +33,7 @@ import lombok.Setter;
 public class Election {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "election_seq")
     private Long            electionidx;    // 인덱스
 
     @Column
