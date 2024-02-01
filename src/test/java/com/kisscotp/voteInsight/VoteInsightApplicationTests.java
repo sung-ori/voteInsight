@@ -71,4 +71,20 @@ class VoteInsightApplicationTests {
 		userService.save(user);
 		
 	}
+
+	@Test
+	void createAdmin() {
+		Users user = new Users();
+
+		user.setName("관리자");
+		user.setStudentid("000011000");
+		user.setGrade(1L);
+		user.setGrouptype(GroupType.ELECTRONICENGINEERING);
+		user.setPassword("0000");
+		user.setPhone("00000000000");
+		user.setRoletype(RoleType.ADMIN);
+		user.setAvailable("Y");
+		userService.save(user);
+		
+	}
 }
