@@ -27,7 +27,7 @@
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
-                            <li class="nav-item"><a class="nav-link" href="notice.html">공지사항</a></li>
+                            <li class="nav-item"><a class="nav-link" th:href="@{/board/list}">공지사항</a></li>
                             <li class="nav-item"><a class="nav-link" href="vote.html">투표하기</a></li>
                             <li class="nav-item"><a class="nav-link" href="voteresult.html">투표결과</a></li>
                             <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')"><a class="nav-link" href="voteresult.html">선거등록</a></li>

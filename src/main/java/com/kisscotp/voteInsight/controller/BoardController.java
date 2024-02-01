@@ -15,10 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardController {
 
     @Autowired
-    public BoardController(BoardService boardService) {
-        this.boardService = boardService;
-    }
-   
+    BoardService boardService;
+     
+    
     //글 작성 뷰
     @GetMapping("/board/write") 
     public String boardWriteForm(){
