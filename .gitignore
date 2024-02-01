@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# DS_Store 파일 내용
+.DS_Store
