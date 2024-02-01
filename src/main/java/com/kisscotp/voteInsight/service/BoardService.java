@@ -21,6 +21,16 @@ public class BoardService {
             return boardRepository.findAll();
         }
 
+         //글 상세       
+        public Board boardview(Long idx){
+            return boardRepository.findById(idx).get();
+        }
+
+
+        //글작성
+        public void write(Board board){
+            boardRepository.save(board);
+        }
  
 
          
