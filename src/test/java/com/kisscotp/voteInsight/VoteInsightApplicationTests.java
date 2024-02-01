@@ -1,5 +1,7 @@
 package com.kisscotp.voteInsight;
 
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -40,7 +42,6 @@ class VoteInsightApplicationTests {
 		user.setRoletype(RoleType.ADMIN);
 		user.setAvailable("Y");
 
-		this.usersRepo.save(user);
 	}
 
 	@Test
@@ -50,7 +51,7 @@ class VoteInsightApplicationTests {
 		b.setTitle("제목 예시");
 		b.setContents("본문 예시");
 		b.setUsername("ㅎㅎㅎ");
-
+		b.setCreatetime(LocalDateTime.now());
 		boardRepo.save(b);
 		
 	}
