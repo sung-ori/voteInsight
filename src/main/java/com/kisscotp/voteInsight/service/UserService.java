@@ -1,7 +1,6 @@
 package com.kisscotp.voteInsight.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,10 +31,10 @@ public class UserService implements UserDetailsService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Users user = userRepo.findByStudentid(username);
+    public UserDetails loadUserByUsername(String studentid) throws UsernameNotFoundException {
+        Users user = userRepo.findByStudentid(studentid);
         if (user == null) {
-            throw new UsernameNotFoundException("해당하는 학번 없음 : " + username);
+            throw new UsernameNotFoundException("해당하는 학번 없음 : " + studentid);
         }
         return  toUserDetail(user);
         
@@ -45,7 +44,7 @@ public class UserService implements UserDetailsService {
         return User.builder()
             .username(user.getStudentid())
             .password(user.getPassword())
-            .authorities(new SimpleGrantedAuthority(user.getRoletype().getKey()))
+            .roles(user.getRoletype().toString())
             .build();
     }
     

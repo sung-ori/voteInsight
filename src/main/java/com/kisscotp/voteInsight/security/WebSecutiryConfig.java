@@ -15,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class WebSecutiryConfig {
+public class WebSecutiryConfig  {
     
     @Autowired
     private DataSource dateasource;
@@ -23,6 +23,8 @@ public class WebSecutiryConfig {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+
         http
         .csrf((csrfConfig) ->
             csrfConfig.disable()
@@ -41,8 +43,8 @@ public class WebSecutiryConfig {
         .formLogin(login -> login
         .loginPage("/loginForm")
         .loginProcessingUrl("/user/login")
-        // .usernameParameter("studentId")
-        // .passwordParameter("password")
+        .usernameParameter("studentid")
+        .passwordParameter("password")
         .defaultSuccessUrl("/",true)
         .permitAll()
         );
