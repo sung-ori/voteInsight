@@ -15,7 +15,7 @@
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="../static/css/styles.css" rel="stylesheet" />
+        <!-- <link href="../static/css/styles.css" rel="stylesheet" /> -->
         <!-- <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" /> -->
         <link th:href="@{/css/styles.css}" rel="stylesheet" />
 
@@ -56,7 +56,7 @@
                                     </tr>
                                     <tr>
                                         <th scope="row">작성자</th>
-                                        <td th:text="${board.name}">관리자</td>
+                                        <td th:text="${board.username}">관리자</td>
                                     </tr>
                                     <tr>
                                         <th scope="row">글 내용</th>
@@ -66,7 +66,7 @@
                             </table>
 
                                <!-- 목록 버튼 -->
-                               <a href="@{/board/list}" class="btn btn-primary me-2">목록</a>
+                               <a th:href="@{/board/list}" class="btn btn-primary me-2">목록</a>
                         </section>
                     </div>
                 </div>

@@ -44,7 +44,7 @@ public class IndexController {
     public String boardView(@RequestParam(name="boardidx", defaultValue="0") Long idx, Model model) {
                 Board board = boardService.boardview(idx);
                model.addAttribute("board", board);
-        return "boardView";
+        return "/boardView";
 }
 
 
