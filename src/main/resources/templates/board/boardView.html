@@ -46,7 +46,15 @@
                             </table>
 
                                <!-- 목록 버튼 -->
-                               <a th:href="@{/board/list}" class="btn btn-primary me-2">목록</a>
+                               <a th:href="@{/board/list}" class="btn btn-primary me-2">목록</a>  
+                             
+                                <!-- 관리자만 보이는 버튼들 -->
+                                <!-- <div th:if="${user.roletype == 'ADMIN'}"> -->
+                                    <div class="text-end">
+                                        <a th:href="@{/board/modify/(boardidx=${board.boardidx})}" class="btn btn-primary me-2">수정</a>
+                                        <a th:href="@{/board/delete/(boardidx=${board.boardidx})}" class="btn btn-primary me-2">삭제</a>    
+                                    </div>
+                                <!-- </div> -->
                         </section>
                     </div>
                 </div>

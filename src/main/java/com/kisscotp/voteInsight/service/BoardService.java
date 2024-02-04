@@ -26,12 +26,29 @@ public class BoardService {
             return boardRepository.findById(idx).get();
         }
 
+         //글 삭제
+         public void boardDelete(Long idx){
+            
+              boardRepository.deleteById(idx);
+        }
 
         //글작성
-        public void write(Board board){
-            boardRepository.save(board);
-        }
- 
+    //     public void write(Board board){
+    //        boardRepository.save(board);
+    //    }
+       
+        
+         //글 수정
+        // public Long update(Long idx, Board board) {
 
-         
+        //     Board board = boardRepository.findById(idx);
+        //     board.update(board.getTitle(), board.getContent());
+        //     boardRepository.save(board);
+
+        //     redirectAttributes.addAttribute("boardidx", board.getId());
+
+        //     return "redirect:/board/view";
+
+        // }
+
 }
