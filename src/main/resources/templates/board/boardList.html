@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+        >
+
+    <head>
+        <!-- head, css, js... -->
+        <div th:replace="~{fragments/config :: config}"></div>
+        <!-- 페이지의 간결한 설명 -->
+        <meta name="description" content="" />
+        <!-- 작성자 -->
+        <meta name="author" content="sung_ori" />
+        <!-- 타이틀 -->
+        <title></title>
+    </head>
+
+    <body class="d-flex flex-column h-100 bg-light">
+        <main class="flex-shrink-0">
+            <!-- nav -->
+            <div th:replace="~{fragments/navBar :: navBar}"></div>
+            <!-- 페이지내용 -->
+            <div class="container px-5 my-5">
+                <div class="text-center mb-5">
+                    <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">공지사항 목록</span></h1>
+                </div>
+                <div class="row gx-5 justify-content-center">
+                    <div class="col-lg-11 col-xl-9 col-xxl-8">
+                         <!-- Detail Section-->
+                         <section>
+                            <div class="card shadow border-0 rounded-4 mb-5">
+                                <div class="card-body p-5">
+                                    <div class="text-center text-lg-start mb-4 mb-lg-0">
+                                        <div class="bg-light p-4 rounded-4">
+                                            <!-- Display board details in a table -->
+                                        <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">글 번호</th>
+                                                <th scope="col">글 제목</th>
+                                                <th scope="col">작성자</th>
+                                                <th scope="col">작성날짜</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="board : ${boards}">
+                                                <td th:text="${board.boardidx}">1</td>
+                                                <a th:href="@{/board/view(boardidx=${board.boardidx})}">
+                                                    <td th:text="${board.title}">제목입니다.</td>
+                                                </a>
+                                                <td th:text="${board.username}">관리자</td>
+                                                <td th:text="${board.createtime}">2024.02.01</td> <!-- 이 부분은 형식 지정이 필요합니다-->
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+
+        <!-- footer -->
+        <div th:replace="~{fragments/footer :: footer}"></div>
+        
+    </body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+        >
+
+    <head>
+        <!-- head, css, js... -->
+        <div th:replace="~{fragments/config :: config}"></div>
+        <!-- 페이지의 간결한 설명 -->
+        <meta name="description" content="" />
+        <!-- 작성자 -->
+        <meta name="author" content="sung_ori" />
+        <!-- 타이틀 -->
+        <title></title>
+    </head>
+    <body class="d-flex flex-column h-100 bg-light">
+        <main class="flex-shrink-0">
+            <!-- nav -->
+            <div th:replace="~{fragments/navBar :: navBar}"></div>
+            <!-- 페이지내용 -->
+            <div class="container px-5 my-5">
+                <div class="text-center mb-5">
+                </div>
+                <div class="row gx-5 justify-content-center">
+                    <div class="col-lg-11 col-xl-9 col-xxl-8">
+                         <!-- Detail Section-->
+                         <section>
+                            <table class="table">
+                                <thead>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">글 제목</th>
+                                        <td th:text="${board.title}">타이틀</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">작성자</th>
+                                        <td th:text="${board.username}">관리자</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">글 내용</th>
+                                        <td th:text="${board.contents}">공지사항입니다</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                               <!-- 목록 버튼 -->
+                               <a th:href="@{/board/list}" class="btn btn-primary me-2">목록</a>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- footer -->
+        <div th:replace="~{fragments/footer :: footer}"></div>
+    </body>
+</html>
