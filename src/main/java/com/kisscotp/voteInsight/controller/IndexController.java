@@ -42,6 +42,13 @@ public class IndexController {
         return "/loginForm";
     }
 
+    @GetMapping("signUp")
+    public String signUp(@AuthenticationPrincipal UserDetails user, Model m){
+        Users loginUser = userService.getUser(user.getUsername());
+        m.addAttribute("user", loginUser);
+        return "/admin/signUpForm";
+    }
+
     //공지사항 목록
     @GetMapping("/board/list")
     public String boardlist(@AuthenticationPrincipal UserDetails user,Model model) {

@@ -1,9 +1,12 @@
 package com.kisscotp.voteInsight;
 
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.kisscotp.voteInsight.domain.Board;
 import com.kisscotp.voteInsight.repository.BoardRepository;
 import com.kisscotp.voteInsight.service.UserService;
 
@@ -38,17 +41,17 @@ class VoteInsightApplicationTests {
 
 	// }
 
-	// @Test
-	// void saveBoardTest() {
-	// 	Board b = new Board();
-
-	// 	b.setTitle("제목 예시");
-	// 	b.setContents("본문 예시");
-	// 	b.setUsername("ㅎㅎㅎ");
-	// 	b.setCreatetime(LocalDateTime.now());
-	// 	boardRepo.save(b);
+	@Test
+	void saveBoardTest() {
+		Board b = new Board();
 		
-	// }
+		b.setTitle("제목 예시");
+		b.setContents("본문 예시");
+		b.setUsername("ㅎㅎㅎ");
+		b.setCreatetime(LocalDateTime.now());
+		boardRepo.save(b);
+		
+	}
 
 	// @Test
 	// void joinTest() {
