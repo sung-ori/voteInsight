@@ -29,6 +29,11 @@ public class UserService implements UserDetailsService {
         userRepo.save(user);
     }
 
+    // 학번으로 유저 한 명을 가져옴
+    public Users getUser(String studentid) {
+        return userRepo.findByStudentid(studentid);
+    }
+
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String studentid) throws UsernameNotFoundException {
@@ -44,7 +49,7 @@ public class UserService implements UserDetailsService {
         return User.builder()
             .username(user.getStudentid())
             .password(user.getPassword())
-            .roles(user.getRoletype().toString())
+            .roles(user.getRoletype().toString())// Enum 활용
             .build();
     }
     
