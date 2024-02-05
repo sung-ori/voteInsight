@@ -45,11 +45,12 @@
                                         <tbody>
                                             <tr th:each="board : ${boards}">
                                                 <td th:text="${board.boardidx}">1</td>
-                                                <a th:href="@{/board/view(boardidx=${board.boardidx})}">
-                                                    <td th:text="${board.title}">제목입니다.</td>
-                                                </a>
+                                                <td>
+                                                    <a th:href="@{'view?boardidx=' + ${board.boardidx}}"></a>
+                                                    <span th:text="${board.title}">제목입니다</span>
+                                                </td>
                                                 <td th:text="${board.username}">관리자</td>
-                                                <td th:text="${board.createtime}">2024.02.01</td> <!-- 이 부분은 형식 지정이 필요합니다-->
+                                                <td th:text="${board.createtime}">2024.02.01</td> 
                                             </tr>
                                         </tbody>
                                     </table>

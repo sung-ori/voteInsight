@@ -25,7 +25,7 @@
                 <div class="row gx-5 justify-content-center">
                     <div class="col-lg-11 col-xl-9 col-xxl-8">
                          <!-- Detail Section-->
-                         <section>
+                         <div>
                             <table class="table">
                                 <thead>
                                 </thead>
@@ -50,11 +50,25 @@
                              
                                 <!-- 관리자만 보이는 버튼들 -->
                                 <!-- <div th:if="${user.roletype == 'ADMIN'}"> -->
-                                    <div class="text-end">
-                                        <a th:href="@{/board/modify/(boardidx=${board.boardidx})}" class="btn btn-primary me-2">수정</a>
-                                        <a th:href="@{/board/delete/(boardidx=${board.boardidx})}" class="btn btn-primary me-2">삭제</a>    
+                                    <div class="text-end mt-3">
+                                        <div class="row">
+                                            <div class="col-md-6 offset-md-6">
+                                                <a th:href="@{/board/modify/(boardidx=${board.boardidx})}" class="btn btn-primary me-2">수정</a>                              
+                                               
+                                                <form id="delete-form" th:action="@{'delete/' + ${board.boardidx}}" method="post">
+                                                    <input type="hidden" name="_method" value="delete"/>
+                                                    <button id="delete-btn" class="btn btn-danger">삭제</button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
                                 <!-- </div> -->
+
+                                
+                               
+                                
+                                </div>
+
                         </section>
                     </div>
                 </div>
