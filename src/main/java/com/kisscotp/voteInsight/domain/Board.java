@@ -46,4 +46,13 @@ public class Board {
 
     @Column
     private LocalDateTime       updatetime;         // 수정 시간
+
+    @Builder
+    public Board(Long boardidx, String title, String contents, String username) {
+        this.boardidx = boardidx;
+        this.username = username;
+        this.title = title;
+        this.contents = contents;
+    }
+
 }

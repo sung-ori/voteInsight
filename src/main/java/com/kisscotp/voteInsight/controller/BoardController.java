@@ -44,8 +44,8 @@ public class BoardController {
     }
 
     //글 작성 뷰
-    @GetMapping("/board/write") 
-    public String boardWriteForm(@AuthenticationPrincipal UserDetails user, Model model){
+    @GetMapping("/write") 
+    public String boardWrite(@AuthenticationPrincipal UserDetails user, Model model){
         if(user != null) {
             Users loginUser = userService.getUser(user.getUsername());
             model.addAttribute("user", loginUser);
@@ -54,12 +54,12 @@ public class BoardController {
     }
 
     //글작성
-    @PostMapping("/board/writepro")
+    @PostMapping("/writepro")
     public String boardwritePro(Board board){ 
 
       boardService.write(board);
 
-        return "redirect:boardList";
+        return "redirect:/board/list";
     }
 
    
