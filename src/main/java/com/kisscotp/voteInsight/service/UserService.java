@@ -29,7 +29,8 @@ public class UserService implements UserDetailsService {
     @Autowired
     PasswordEncoder encoder;
 
-    public void save(String year, Long grade, GroupType group, String name, String phone) {
+    // 계정 만들기
+    public Users createUser(String year, Long grade, GroupType group, String name, String phone) {
         Users user = new Users();
         user.setName(name);
         user.setPhone(phone);
@@ -41,6 +42,13 @@ public class UserService implements UserDetailsService {
         // 패스워드의 인코딩
         user.setPassword(encoder.encode(user.getStudentid()));
         // 현재는 엔터티를 사용하지만 dto를 만들고 빌더를 사용하는 방식으로 수정하는 것이 좋을 지도,,?
+
+        return user;
+    }
+
+    // 저장
+    public void save(Users user) {
+    
         userRepo.save(user);
     }
 
@@ -67,6 +75,7 @@ public class UserService implements UserDetailsService {
             .roles(user.getRoletype().toString())// Enum 활용
             .build();
     }
+
     /*
      * 학번 생성기
      * 학번은 입학년도, 학과, 시퀀스 세 가지 요소로 구성할 것이다.
@@ -89,8 +98,8 @@ public class UserService implements UserDetailsService {
             seq = "001";
         }
         else {
-            Collections.sort(userList, Comparator.comparing(Users::getUseridx));
-            String lastStudentId = userList.get(0).getStudentid(); //list 중 가장 큰 시퀀스의 학번
+            Collections.sort(userList, Comparator.comparing(Users::getStudentid));
+            String lastStudentId = userList.get(userList.size()-1).getStudentid(); //list 중 가장 큰 시퀀스의 학번
             seq = lastStudentId.substring(lastStudentId.length()-3);    // 시퀀스 3자리만 추출
 
             Integer intSeq = Integer.parseInt(seq);                     // Integer로 변환해 

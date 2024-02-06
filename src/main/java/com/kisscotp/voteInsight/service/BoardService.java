@@ -33,9 +33,9 @@ public class BoardService {
         }
 
         //글작성
-        public Long write(Board board){
-          return boardRepository.save(board);
-       }
+      //   public Long write(Board board){
+      //     // return boardRepository.save(board);
+      //  }
        
         
          //글 수정

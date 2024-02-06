@@ -20,7 +20,8 @@ public class UserController {
 
     @PostMapping("/signUp")
     public String join(String year, Long grade,GroupType group, String name, String phone) {
-        service.save(year, grade, group, name, phone);
+        
+        service.save(service.createUser(year, grade, group, name, phone));
         
         // 일단 홈으로 !
         return "redirect:/";

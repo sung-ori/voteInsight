@@ -57,7 +57,7 @@ public class BoardController {
     @PostMapping("/writepro")
     public String boardwritePro(Board board){ 
 
-      boardService.write(board);
+    //   boardService.write(board);
 
         return "redirect:/board/list";
     }
