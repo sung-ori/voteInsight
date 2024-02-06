@@ -26,32 +26,26 @@
                 <div class="row gx-5 justify-content-center">
                     <div class="col-lg-11 col-xl-9 col-xxl-8">
                          <!-- Detail Section-->
-                         <section>
                             <section>
-                                    <form action="/board/writepro" method="post"></form>
-                                    <!-- 제목 입력 필드 -->
+                                <form th:action="@{/board/writepro}" th:object="${requestDto}" method="post">
                                     <div class="mb-3">
                                         <label for="title" class="form-label">제목</label>
-                                        <input type="text" class="form-control" id="title" name="title" required>
+                                        <input type="text" class="form-control" id="title" th:field="*{title}">
                                     </div>
-                                    <!-- 내용 입력 필드 -->
+                                    <div class="mb-3">
+                                        <label for="username" class="form-label">작성자</label>
+                                        <input type="text" class="form-control" id="username" th:field="*{username}">
+                                    </div>
                                     <div class="mb-3">
                                         <label for="contents" class="form-label">내용</label>
-                                        <textarea class="form-control" id="contents" name="contents" rows="5" required></textarea>
-                                    </div>   
-
-                                    <div class="d-flex justify-content-between">
-                                        <!-- 목록 버튼 -->
-                                        <a href="/list" class="btn btn-secondary me-2">목록</a>
-                                        <!-- 글쓰기 버튼 -->
-                                        <button type="submit" class="btn btn-primary">글쓰기</button>
+                                        <textarea class="form-control" id="contents" rows="5" th:field="*{contents}"></textarea>
+                                    </div>
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-between">
+                                        <a th:href="@{/board/list}" class="btn btn-primary me-md-2 mb-2 mb-md-0">목록</a>
+                                        <button type="submit" class="btn btn-primary">등록</button>
                                     </div>
                                 </form>
-                            </section>
-
-
-
-                </section>
+                            </section>   
                     </div>
                 </div>
             </div>

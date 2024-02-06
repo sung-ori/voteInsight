@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.kisscotp.voteInsight.domain.Board;
+import com.kisscotp.voteInsight.domain.BoardResponseDto;
 import com.kisscotp.voteInsight.repository.BoardRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -12,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class BoardService {
-
 
          private final BoardRepository boardRepository;
 
@@ -32,23 +32,17 @@ public class BoardService {
               boardRepository.deleteById(idx);
         }
 
-        //글작성
-        public Long write(Board board){
-          return boardRepository.save(board);
-       }
-       
+      // 게시글 저장 
+    //   public BoardResponseDto boardSave(Board board) {
         
-         //글 수정
-        // public Long update(Long idx, Board board) {
+    //      return  boardRepository.save(board); 
+    //     }
 
-        //     Board board = boardRepository.findById(idx);
-        //     board.update(board.getTitle(), board.getContent());
-        //     boardRepository.save(board);
-
-        //     redirectAttributes.addAttribute("boardidx", board.getId());
-
-        //     return "redirect:/board/view";
-
-        // }
+        // 게시글 저장 
+    public BoardResponseDto boardSave(Board board) {
+        Board savedBoard = boardRepository.save(board);
+        
+        return new BoardResponseDto(savedBoard); 
+}
 
 }

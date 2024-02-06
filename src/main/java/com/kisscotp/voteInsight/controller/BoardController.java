@@ -6,11 +6,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kisscotp.voteInsight.domain.Board;
+import com.kisscotp.voteInsight.domain.BoardRequestDto;
 import com.kisscotp.voteInsight.domain.Users;
 import com.kisscotp.voteInsight.service.BoardService;
 import com.kisscotp.voteInsight.service.UserService;
@@ -45,35 +47,26 @@ public class BoardController {
 
     //글 작성 뷰
     @GetMapping("/write") 
-    public String boardWrite(@AuthenticationPrincipal UserDetails user, Model model){
+    public String boardWrite(@AuthenticationPrincipal UserDetails user, 
+                                Model model, 
+                                BoardRequestDto requestDto){
         if(user != null) {
             Users loginUser = userService.getUser(user.getUsername());
             model.addAttribute("user", loginUser);
         }
+        model.addAttribute("requestDto",requestDto);
+
         return "/board/boardWrite";
     }
 
-    //글작성
+
+    //글 작성
     @PostMapping("/writepro")
-    public String boardwritePro(Board board){ 
+    public String boardWritePro(@ModelAttribute("requestDto")  BoardRequestDto requestDto) {
+        Board board = new Board(requestDto);
+        boardService.boardSave(board);
+    return "redirect:/board/list";   
+}
+    
 
-      boardService.write(board);
-
-        return "redirect:/board/list";
-    }
-
-   
-
-    // 글 수정 뷰 
-    // @GetMapping("/modify/{boardidx}")
-    // public String boardModify(@PathVariable("idx") Long idx, Model model){
-    //     model.addAttribute("board", boardService.boardview(idx));
-    //     return "boardmodify";
-    // }
-
-    // 게시글 수정
-    // @PutMapping("/update/{boardidx}")
-    // public Long update(@PathVariable Long idx, @RequestBody Board board) {
-    //     return boardService.update(idx, board);
-    // }
 }
