@@ -46,8 +46,7 @@
                                             <tr th:each="board : ${boards}">
                                                 <td th:text="${board.boardidx}">1</td>
                                                 <td>
-                                                    <a th:href="@{'view?boardidx=' + ${board.boardidx}}"></a>
-                                                    <span th:text="${board.title}">제목입니다</span>
+                                                    <a th:href="@{'view?boardidx=' + ${board.boardidx}}" th:text="${board.title}">제목입니다</a>
                                                 </td>
                                                 <td th:text="${board.username}">관리자</td>
                                                 <td th:text="${board.createtime}">2024.02.01</td> 
