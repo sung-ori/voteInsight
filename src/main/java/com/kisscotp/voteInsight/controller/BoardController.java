@@ -59,17 +59,14 @@ public class BoardController {
         return "/board/boardWrite";
     }
 
+
     //글 작성
     @PostMapping("/writepro")
-    public String boardWritePro(@ModelAttribute("requestDto")  BoardRequestDto requestDto) {   
-        
+    public String boardWritePro(@ModelAttribute("requestDto")  BoardRequestDto requestDto) {
         Board board = new Board(requestDto);
-       
         boardService.boardSave(board);
-         
-         return "redirect:/board/list";
-        
-    }
+    return "redirect:/board/list";   
+}
     
 
 }

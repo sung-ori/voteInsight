@@ -49,6 +49,7 @@ public class Board {
     private LocalDateTime       updatetime;         // 수정 시간
 
  
+
     @Builder
     public Board(String title, String contents, String username) {
         this.title = title;
@@ -58,5 +59,10 @@ public class Board {
         this.updatetime = LocalDateTime.now();
     }
 
+    public Board(BoardRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.contents = requestDto.getContents();
+        this.username = requestDto.getUsername();
+    }
 
 }
