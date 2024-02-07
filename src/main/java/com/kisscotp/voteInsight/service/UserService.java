@@ -5,6 +5,10 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -29,22 +33,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     PasswordEncoder encoder;
 
-    // 계정 만들기
-    public Users createUser(String year, Long grade, GroupType group, String name, String phone) {
-        Users user = new Users();
-        user.setName(name);
-        user.setPhone(phone);
-        user.setAvailable("Y");
-        user.setGrade(grade);
-        user.setRoletype(RoleType.USER);
-        user.setGrouptype(group);
-        user.setStudentid(createStudentId(year, group.getKey()) );
-        // 패스워드의 인코딩
-        user.setPassword(encoder.encode(user.getStudentid()));
-        // 현재는 엔터티를 사용하지만 dto를 만들고 빌더를 사용하는 방식으로 수정하는 것이 좋을 지도,,?
-
-        return user;
-    }
+    
 
     // 저장
     public void save(Users user) {
@@ -57,6 +46,7 @@ public class UserService implements UserDetailsService {
         return userRepo.findByStudentid(studentid);
     }
 
+    // 로그인, 계정 인증 관련
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String studentid) throws UsernameNotFoundException {
@@ -74,6 +64,23 @@ public class UserService implements UserDetailsService {
             .password(user.getPassword())
             .roles(user.getRoletype().toString())// Enum 활용
             .build();
+    }
+
+    // 계정 만들기
+    public Users createUser(String year, Long grade, GroupType group, String name, String phone) {
+        Users user = new Users();
+        user.setName(name);
+        user.setPhone(phone);
+        user.setAvailable("Y");
+        user.setGrade(grade);
+        user.setRoletype(RoleType.USER);
+        user.setGrouptype(group);
+        // 학번 생성
+        user.setStudentid(createStudentId(year, group.getKey()) );
+        // 패스워드의 인코딩
+        user.setPassword(encoder.encode(user.getStudentid()));
+
+        return user;
     }
 
     /*
@@ -123,5 +130,26 @@ public class UserService implements UserDetailsService {
 
         return stdId;
     }
-    
+
+    public Page<Users> userList(String type, String keyword, int page) {
+        Sort sort = Sort.by("type").descending();
+
+        Pageable pageable = PageRequest.of(page, 10);
+        Page<Users> users = null;
+        
+
+        if(keyword == null && type == null) {
+            users = userRepo.findAll(pageable);
+            System.out.println("토탈 갯수 : " + users.getTotalElements()); 
+            System.out.println("토탈 페이지 : " + users.getTotalPages()); 
+        }
+        if(type == "name") {
+            users = userRepo.findByNameContaining(keyword,pageable);
+        }
+        if(type == "studentid") {
+            users = userRepo.findByStudentidContaining(keyword,pageable);
+        }
+
+        return users;
+    }
 }
