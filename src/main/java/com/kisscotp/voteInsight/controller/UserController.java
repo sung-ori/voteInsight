@@ -15,10 +15,10 @@ import com.kisscotp.voteInsight.domain.Users;
 import com.kisscotp.voteInsight.domain.enums.GroupType;
 import com.kisscotp.voteInsight.service.UserService;
 
-import groovy.util.logging.Slf4j;
+
 
 @Controller
-@Slf4j
+@lombok.extern.slf4j.Slf4j
 @RequestMapping("user")
 public class UserController {
     
@@ -34,18 +34,24 @@ public class UserController {
         return "redirect:/";
     }
 
-        @GetMapping("/list")
+    @GetMapping("/list")
     public String search(@AuthenticationPrincipal UserDetails user,
                         @RequestParam(name = "type", required = false) String type,
                         @RequestParam(name = "keyword", required = false)String keyword,
-                        @RequestParam(defaultValue = "0") int page,
+                        @RequestParam(name = "page", defaultValue = "0", required = true) int page,
                         Model model) {
+        
+        System.out.println("콘 타입 : " + type);
+        System.out.println("콘 키워드 : " + keyword);
+        System.out.println("콘 페이지 :" + page);
 
         Page<Users> users = service.userList(type, keyword, page);
         
         Users loginUser = service.getUser(user.getUsername());
         model.addAttribute("user", loginUser);
         model.addAttribute("users",users);
+
+        
         return "/admin/userListForm";
     }
 

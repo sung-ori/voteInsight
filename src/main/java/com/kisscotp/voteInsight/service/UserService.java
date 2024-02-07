@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -132,7 +131,7 @@ public class UserService implements UserDetailsService {
     }
 
     public Page<Users> userList(String type, String keyword, int page) {
-        Sort sort = Sort.by("type").descending();
+        // Sort sort = Sort.by("type").descending();
 
         Pageable pageable = PageRequest.of(page, 10);
         Page<Users> users = null;
@@ -142,12 +141,25 @@ public class UserService implements UserDetailsService {
             users = userRepo.findAll(pageable);
             System.out.println("토탈 갯수 : " + users.getTotalElements()); 
             System.out.println("토탈 페이지 : " + users.getTotalPages()); 
+            return users;
         }
-        if(type == "name") {
+
+        if (type.equals("name")) {
             users = userRepo.findByNameContaining(keyword,pageable);
+            return users;
         }
-        if(type == "studentid") {
+
+        if (type.equals("studentid")) {
+            
             users = userRepo.findByStudentidContaining(keyword,pageable);
+
+            System.out.println("학번 토탈 갯수 : " + users.getTotalElements()); 
+            System.out.println("학번 토탈 페이지 : " + users.getTotalPages()); 
+
+            for(Users a: users.getContent()) {
+                System.out.println(a.getName());
+            }
+            return users;
         }
 
         return users;

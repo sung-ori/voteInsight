@@ -27,7 +27,7 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
     // @Query(value = "SELECT * FROM VI_USERS u WHERE u.studentid LIKE :keyword%",nativeQuery=true)
     List<Users> findByStudentidStartingWith(String studentid);
 
-    Page<Users> findByStudentidContaining(String studentid,Pageable pageable);
+    Page<Users> findByStudentidContaining(String keyword, Pageable pageable);
 
     Page<Users> findByNameContaining(String name, Pageable pageable);
 }

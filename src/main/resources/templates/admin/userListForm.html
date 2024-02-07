@@ -33,20 +33,22 @@
                         <div class="card shadow border-0 rounded-4 mb-5">
                             <div class="card-body p-5">
                                 <div class="text-center text-lg-start mb-4 mb-lg-0">
+                                    <form th:action="@{/user/list}" method="get">
                                     <div class=" align-center bg-light p-4 rounded-4 row">
                                         <div class="col-3">
                                             <select class="form-select" name="type" id="type">
-                                                <option value="stdentid">학번</option>
+                                                <option value="studentid">학번</option>
                                                 <option value="name">이름</option>
                                             </select>
                                         </div>
                                         <div class="col-7">
-                                            <input class="form-control" type="text">
+                                            <input class="form-control" type="text" name="keyword" id="keyword">
                                         </div>
                                         <div class="col-2">
-                                            <button class="btn btn-primary text-white shadow">검색</button>
+                                            <input type="submit" class="btn btn-primary text-white shadow" value="검색"></input>
                                         </div>
                                     </div>
+                                    </form>
                                 </div>
                                 <div>
                                     <table class="table">
@@ -79,11 +81,11 @@
                                 <!-- 이전 페이지 버튼 -->
                                 <!-- <button type="button" class="btn bg-info"> -->
                                     <a th:if="${param.type == null and param.keyword == null}" th:href="@{/user/list(page=0)}" class="btn btn-info">처음</a>
-                                    <a th:if="${param.type != null and param.keyword != null}" th:href="@{/user/list(type=${#request.getParameter('type')}, keyword=${#request.getParameter('keyword')}, page=0)}" class="btn btn-info">처음</a>
+                                    <a th:if="${param.type != null and param.keyword != null}" th:href="@{/user/list(type=${param.type}, keyword=${param.keyword}, page=0)}" class="btn btn-info">처음</a>
                                 <!-- </button> -->
                         
                                     <a th:if="${param.type == null and param.keyword == null and users.hasPrevious}" th:href="@{/user/list(page=${users.number} - 1)}" class="btn btn-info">이전</a>
-                                    <a th:if="${param.type != null and param.keyword != null and users.hasPrevious}" th:href="@{/user/list?type=${#request.getParameter('type')}&keyword=${#request.getParameter('keyword')}&page=${users.number} - 1}" class="btn btn-info">이전</a>
+                                    <a th:if="${param.type != null and param.keyword != null and users.hasPrevious}" th:href="@{/user/list(type=${param.type}, keyword=${param.keyword}, page=${users.number} - 1)}" class="btn btn-info">이전</a>
                         
                                 <!-- 페이지 번호 -->
                                 <!-- 전체 페이지가 5 이하인 경우 -->
@@ -96,21 +98,21 @@
                                 <div th:if="${users.number + 5  <= users.totalPages}">
                                     <!-- 전체 페이지가 5 이상인 경우 -->
                                         <a th:if="${param.type == null and param.keyword == null}" th:each="pageNumber : ${#numbers.sequence(users.number, users.number + 4)}" th:href="@{/user/list(page=${pageNumber})}" th:text="${pageNumber + 1}" class="btn btn-info">1</a>
-                                        <a th:if="${param.type != null and param.keyword != null}" th:each="pageNumber : ${#numbers.sequence(users.number, users.number + 4)}" th:href="@{/user/list?type=${#request.getParameter('type')}&keyword=${#request.getParameter('keyword')}&page=${pageNumber}}" th:text="${pageNumber + 1}" class="btn btn-info">1</a>
+                                        <a th:if="${param.type != null and param.keyword != null}" th:each="pageNumber : ${#numbers.sequence(users.number, users.number + 4)}" th:href="@{/user/list(type=${param.type}, keyword=${param.keyword}, page=${pageNumber})}" th:text="${pageNumber + 1}" class="btn btn-info">1</a>
                                 </div>
 
                                 <div th:if="${users.number + 5  > users.totalPages}">
                                         <a th:if="${param.type == null and param.keyword == null}" th:each="pageNumber : ${#numbers.sequence(users.number, users.totalPages - 1)}" th:href="@{/user/list(page=${pageNumber})}" th:text="${pageNumber+1}" class="btn btn-info">1</a>
-                                        <a th:if="${param.type != null and param.keyword != null}" th:each="pageNumber : ${#numbers.sequence(users.number, users.totalPages - 1)}" th:href="@{/user/list?type=${#request.getParameter('type')}&keyword=${#request.getParameter('keyword')}&page=${pageNumber}}" th:text="${pageNumber + 1}" class="btn btn-info">1</a>
+                                        <a th:if="${param.type != null and param.keyword != null}" th:each="pageNumber : ${#numbers.sequence(users.number, users.totalPages - 1)}" th:href="@{/user/list?(type=${param.type}, keyword=${param.keyword}, page=${pageNumber})}" th:text="${pageNumber + 1}" class="btn btn-info">1</a>
                                 </div>
                         
                                 <!-- 다음 페이지 버튼 -->
                                     <a th:if="${param.type == null and param.keyword == null and users.hasNext}" th:href="@{/user/list(page=${users.number} + 1)}" class="btn btn-info">다음</a>
-                                    <a th:if="${param.type != null and param.keyword != null and users.hasNext}" th:href="@{/user/list?type=${#request.getParameter('type')}&keyword=${#request.getParameter('keyword')}&page=${users.number} + 1}" class="btn btn-info">다음</a>
+                                    <a th:if="${param.type != null and param.keyword != null and users.hasNext}" th:href="@{/user/list?(type=${param.type}, keyword=${param.keyword}, page=${users.number} + 1)}" class="btn btn-info">다음</a>
                         
                                 <!-- <button class="btn btn-info" > -->
                                     <a th:if="${param.type == null and param.keyword == null}" th:href="@{/user/list(page=${users.totalPages-1})}" class="btn btn-info">마지막</a>
-                                    <a th:if="${param.type != null and param.keyword != null}" th:href="@{/user/list?type=${#request.getParameter('type')}&keyword=${#request.getParameter('keyword')}&page=${users.totalPages-1}}" class="btn btn-info">마지막</a>
+                                    <a th:if="${param.type != null and param.keyword != null}" th:href="@{/user/list(type=${param.type}, keyword=${param.keyword}, page=${users.totalPages-1})}" class="btn btn-info">마지막</a>
                                 <!-- </button> -->
                             </div>
                         </div>
