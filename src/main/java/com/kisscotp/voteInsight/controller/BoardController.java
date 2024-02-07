@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kisscotp.voteInsight.domain.Board;
@@ -59,14 +60,41 @@ public class BoardController {
         return "/board/boardWrite";
     }
 
-
     //글 작성
     @PostMapping("/writepro")
     public String boardWritePro(@ModelAttribute("requestDto")  BoardRequestDto requestDto) {
         Board board = new Board(requestDto);
         boardService.boardSave(board);
     return "redirect:/board/list";   
-}
-    
+    }
+
+     //글 수정
+     @PostMapping("/update/{boardidx}")
+     public String boardUpdate( @PathVariable Long idx, @RequestBody BoardRequestDto boardRequestDto) {
+        Board board = new Board(requestDto);
+        boardService.boardUpdate(idx, boardRequestDto);
+   return "redirect:/board/list";  
+ }
+
+     //글 수정 뷰
+     @GetMapping("/updateView/{boardidx}") 
+     public String boardWrite(@AuthenticationPrincipal UserDetails user, 
+                                 Model model, 
+                            @PathVariable(name="boardidx") Long idx,
+                                 BoardRequestDto requestDto){
+         if(user != null) {
+             Users loginUser = userService.getUser(user.getUsername());
+             model.addAttribute("user", loginUser);
+         }
+         Board board = boardService.boardview(idx);
+
+       //  model.addAttribute("requestDto",requestDto);
+         model.addAttribute("board", board);
+
+         return "/board/boardUpdate";
+     }
+
+  
+   
 
 }

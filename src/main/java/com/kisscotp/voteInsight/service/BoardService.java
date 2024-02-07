@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.kisscotp.voteInsight.domain.Board;
+import com.kisscotp.voteInsight.domain.BoardRequestDto;
 import com.kisscotp.voteInsight.domain.BoardResponseDto;
 import com.kisscotp.voteInsight.repository.BoardRepository;
 
@@ -31,18 +32,24 @@ public class BoardService {
             
               boardRepository.deleteById(idx);
         }
-
-      // 게시글 저장 
-    //   public BoardResponseDto boardSave(Board board) {
         
-    //      return  boardRepository.save(board); 
-    //     }
-
-        // 게시글 저장 
-    public BoardResponseDto boardSave(Board board) {
-        Board savedBoard = boardRepository.save(board);
+        // 글 저장 
+         public BoardResponseDto boardSave(Board board) {
+             Board savedBoard = boardRepository.save(board);
         
-        return new BoardResponseDto(savedBoard); 
-}
+            return new BoardResponseDto(savedBoard); 
+        
+         }
 
-}
+        // 글 수정
+        public BoardResponseDto boardUpdate(Long idx, BoardRequestDto requestDto) {
+            Board board = boardRepository.findById(idx)
+            board.update(requestDto.getTitle(), requestDto.getContents(), requestDto.getUsername());
+            Board updatedBoard = boardRepository.save(board);
+
+            return new BoardResponseDto(updatedBoard);
+            }
+
+    }
+        
+    
