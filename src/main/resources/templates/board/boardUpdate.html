@@ -27,24 +27,25 @@
                     <div class="col-lg-11 col-xl-9 col-xxl-8">
                          <!-- Detail Section-->
                             <section>
-                                <form th:action="@{/board/update/{boardidx}(boardidx=${board.boardidx})}" th:object="${requestDto}" method="post">
+                                <form th:action="@{/board/update/{boardidx}(boardidx=${board.boardidx})}" th:object="${board}" method="post">
                                     <div class="mb-3">
                                         <label for="title" class="form-label">제목</label>
-                                        <input type="text" class="form-control" id="title"  th:value="${board.title}">
+                                        <input type="text" class="form-control" id="title" th:value="${board.title}" th:field="*{title}">
                                     </div>
                                     <div class="mb-3">
                                         <label for="username" class="form-label">작성자</label>
-                                        <input type="text" class="form-control" id="username" th:value="${board.username}">
+                                        <input type="text" class="form-control" id="username" th:value="${board.username}" th:field="*{username}">
                                     </div>
                                     <div class="mb-3">
                                         <label for="contents" class="form-label">내용</label>
-                                        <textarea class="form-control" id="contents" rows="5" th:text="${board.contents}"></textarea>
+                                        <textarea class="form-control" id="contents" rows="5" th:text="${board.contents}" th:field="*{contents}"></textarea>
                                     </div>
                                     <div class="d-grid gap-2 d-md-flex justify-content-md-between">
                                         <a th:href="@{/board/list}" class="btn btn-primary me-md-2 mb-2 mb-md-0">목록</a>                                                                           
                                         <button type="submit" class="btn btn-primary">수정</button>
                                     </div>
                                 </form>
+                                
                             </section>   
                     </div>
                 </div>

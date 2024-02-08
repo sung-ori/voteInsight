@@ -63,6 +63,7 @@ public class Board {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
         this.username = requestDto.getUsername();
+        this.createtime = LocalDateTime.now(); 
     }
 
     public void update(String title, String contents, String username) {

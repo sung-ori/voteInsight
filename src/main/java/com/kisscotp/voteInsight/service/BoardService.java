@@ -40,16 +40,16 @@ public class BoardService {
             return new BoardResponseDto(savedBoard); 
         
          }
+            // 글 수정
+        public void boardUpdate(Long idx, BoardRequestDto requestDto) {
+                Board board = boardRepository.findById(idx)
+                    .orElseThrow(() -> new RuntimeException("Board not found"));
 
-        // 글 수정
-        public BoardResponseDto boardUpdate(Long idx, BoardRequestDto requestDto) {
-            Board board = boardRepository.findById(idx)
-            board.update(requestDto.getTitle(), requestDto.getContents(), requestDto.getUsername());
-            Board updatedBoard = boardRepository.save(board);
+             board.update(requestDto.getTitle(), requestDto.getContents(), requestDto.getUsername());
 
-            return new BoardResponseDto(updatedBoard);
-            }
+            boardRepository.save(board);
+        }
 
-    }
+ }
         
     
