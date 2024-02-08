@@ -56,6 +56,7 @@ public class IndexController {
             model.addAttribute("user", loginUser);
         }
         model.addAttribute("boards", boardService.boardlist());
+        
         return "/board/boardList";
     }
 
@@ -68,7 +69,9 @@ public class IndexController {
             Users loginUser = userService.getUser(user.getUsername());
             model.addAttribute("user", loginUser);
         }
+
         Board board = boardService.boardview(idx);
+
         model.addAttribute("board", board);
         return "/board/boardView";
 }
