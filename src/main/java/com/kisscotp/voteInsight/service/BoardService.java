@@ -40,7 +40,7 @@ public class BoardService {
             return new BoardResponseDto(savedBoard); 
         
          }
-            // 글 수정
+        // 글 수정 
         public void boardUpdate(Long idx, BoardRequestDto requestDto) {
                 Board board = boardRepository.findById(idx)
                     .orElseThrow(() -> new RuntimeException("Board not found"));
