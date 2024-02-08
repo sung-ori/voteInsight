@@ -59,6 +59,7 @@ public class BoardController {
         return "/board/boardWrite";
     }
 
+
     //글 작성
     @PostMapping("/writepro")
     public String boardWritePro(@ModelAttribute("requestDto")  BoardRequestDto requestDto) {
@@ -67,30 +68,41 @@ public class BoardController {
     return "redirect:/board/list";   
     }
 
-      
     //글 수정 뷰
      @GetMapping("/updateView/{boardidx}") 
-    public String boardWrite(@AuthenticationPrincipal UserDetails user, 
-                         Model model, 
-                         @PathVariable(name="boardidx") Long idx,
-                         BoardRequestDto requestDto) {
-        if (user != null) {
-            Users loginUser = userService.getUser(user.getUsername());
-            model.addAttribute("user", loginUser);
-        }
+     public String boardWrite(@AuthenticationPrincipal UserDetails user, 
+                                 Model model, 
+                            @PathVariable(name="boardidx") Long idx,
+                                 BoardRequestDto requestDto){
+         if(user != null) {
+             Users loginUser = userService.getUser(user.getUsername());
+             model.addAttribute("user", loginUser);
+         }
+         Board board = boardService.boardview(idx);
 
-        Board board = boardService.boardview(idx);
+         model.addAttribute("requestDto",requestDto);
+         model.addAttribute("board", board);
 
-        model.addAttribute("requestDto", requestDto);
-        model.addAttribute("board", board);
+         return "/board/boardUpdate";
+     }
 
-        return "/board/boardUpdate";
-    }
 
-    //글 수정
-    @PostMapping("/update/{boardidx}")
-    public String boardUpdate(@PathVariable Long boardidx, @ModelAttribute("requestDto") BoardRequestDto requestDto) {   
-        boardService.boardUpdate(boardidx, requestDto);
-        return "redirect:/board/list"; 
-    }
+     // 글 수정
+     @PostMapping("/update/{boardidx}") 
+     public String boardUpdate(@PathVariable Long boardidx, 
+                           @ModelAttribute BoardRequestDto requestDto) { 
+    boardService.boardUpdate(boardidx, requestDto); 
+                               
+   return "redirect:/board/list"; 
+ }
+
+
+
+
+
+
+                            
+  
+   
+
 }
