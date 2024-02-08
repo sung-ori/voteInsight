@@ -10,7 +10,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -50,7 +49,6 @@ public class Board {
 
  
 
-    @Builder
     public Board(String title, String contents, String username) {
         this.title = title;
         this.contents = contents;
@@ -63,6 +61,14 @@ public class Board {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
         this.username = requestDto.getUsername();
+        this.createtime = LocalDateTime.now(); 
     }
+
+    public void update(String title, String contents, String username) {
+        this.title = title;
+        this.contents = contents;
+        this.username = username;
+        this.updatetime = LocalDateTime.now();
+    }    
 
 }
