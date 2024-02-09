@@ -59,4 +59,21 @@ public class Election {
 
     @Column
     private LocalDateTime   enddate;        // 열람 마감일
+
+   // 진행 상황 한글로 반환하는 메서드
+   public String getProgressKorean() {
+    switch (progress) {
+        case '0':
+            return "준비중";
+        case '1':
+            return "진행중";
+        case '2':
+            return "투표 종료 열람 가능";
+        case '3':
+            return "열람기간 만료";
+        default:
+            return "알 수 없음";
+    }
+}
+
 }

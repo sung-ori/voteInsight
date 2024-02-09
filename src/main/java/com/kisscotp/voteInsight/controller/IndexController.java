@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kisscotp.voteInsight.domain.Board;
 import com.kisscotp.voteInsight.domain.Users;
 import com.kisscotp.voteInsight.service.BoardService;
+import com.kisscotp.voteInsight.service.ElectionService;
 import com.kisscotp.voteInsight.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,9 @@ public class IndexController {
 
     @Autowired
     BoardService boardService;
+    
+     @Autowired
+    private ElectionService electionService;
 
     @Autowired
     UserService userService;
@@ -75,5 +79,20 @@ public class IndexController {
         model.addAttribute("board", board);
         return "/board/boardView";
 }
+
+   //선거 목록
+   @GetMapping("election/list")
+   public String electionlist(@AuthenticationPrincipal UserDetails user,Model model) {
+      
+       if(user != null) {
+           Users loginUser = userService.getUser(user.getUsername());
+           model.addAttribute("user", loginUser);
+       }
+      
+       model.addAttribute("elections", electionService.electionlist());
+       
+       return "/election/electionList";
+   }
+
 
 }
