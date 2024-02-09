@@ -50,6 +50,20 @@ public class BoardService {
             boardRepository.save(board);
         }
 
+        // //페이징
+        // public Page<BoardResponseDto> paging(Pageable pageable) {
+        //     int page = pageable.getPageNumber(); // 페이지 번호는 0부터 시작
+        //     int pageLimit = 10; // 한 페이지에 보여줄 글 개수
+            
+        //     // 한 페이지당 10개식 글을 보여주고 정렬 기준은 IDX 기준으로 내림차순
+        //     Page<Board> boardPages = boardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Direction.DESC, "idx")));
+        
+        //     // 목록 : id, title, contents, username
+        //     return boardPages.map(BoardResponseDto::new);
+
+        // }
+
+
  }
         
     

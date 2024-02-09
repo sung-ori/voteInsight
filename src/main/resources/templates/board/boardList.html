@@ -53,6 +53,32 @@
                                             </tr>
                                         </tbody>
                                     </table>
+                                     <!-- 페이징 -->
+                                     <!-- <nav aria-label="Page navigation">
+                                        <ul class="pagination justify-content-center"> -->
+                                            <!-- 첫 페이지로 이동 -->
+                                            <!-- <li class="page-item">
+                                                <a class="page-link" th:href="@{/board/paging(page=1)}">첫 페이지</a>
+                                            </li> -->
+                                            <!-- 이전 페이지로 이동 -->
+                                            <!-- <li class="page-item" th:classappend="${boardPages.first} ? 'disabled'">
+                                                <a class="page-link" th:href="${boardPages.hasPrevious()} ? @{/board/paging(page=${boardPages.number})} : '#'">이전</a>
+                                            </li> -->
+                                            <!-- 페이지 번호 -->
+                                            <!-- <li th:each="page : ${#numbers.sequence(startPage, endPage)}" th:class="${boardPages.number + 1 == page} ? 'page-item active' : 'page-item'">
+                                                <a class="page-link" th:href="@{/board/paging(page=${page})}" th:text="${page}"></a>
+                                            </li> -->
+                                            <!-- 다음 페이지로 이동 -->
+                                            <!-- <li class="page-item" th:classappend="${boardPages.last} ? 'disabled'">
+                                                <a class="page-link" th:href="${boardPages.hasNext()} ? @{/board/paging(page=${boardPages.number + 2})} : '#'">다음</a>
+                                            </li> -->
+                                            <!-- 마지막 페이지로 이동 -->
+                                            <!-- <li class="page-item">
+                                                <a class="page-link" th:href="@{/board/paging(page=${boardPages.totalPages})}">마지막 페이지</a>
+                                            </li>
+                                        </ul>
+                                    </nav> -->
+                                    
                                     <!-- 관리자용 버튼          -->
                                     <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
                                         <div class="text-end">
