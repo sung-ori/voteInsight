@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kisscotp.voteInsight.domain.Board;
+import com.kisscotp.voteInsight.domain.Election;
 import com.kisscotp.voteInsight.domain.Users;
 import com.kisscotp.voteInsight.service.BoardService;
 import com.kisscotp.voteInsight.service.ElectionService;
@@ -93,6 +94,22 @@ public class IndexController {
        
        return "/election/electionList";
    }
+
+       //공지사항 상세조회
+    @GetMapping("election/view") 
+    public String electionView(@AuthenticationPrincipal UserDetails user, 
+                            @RequestParam(name="electionidx", defaultValue="0") Long idx,
+                             Model model) {
+        if(user != null) {
+            Users loginUser = userService.getUser(user.getUsername());
+            model.addAttribute("user", loginUser);
+        }
+
+        Election election = electionService.electionview(idx);
+
+        model.addAttribute("election", election);
+        return "/election/electionView";
+}
 
 
 }

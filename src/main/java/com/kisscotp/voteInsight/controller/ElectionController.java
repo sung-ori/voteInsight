@@ -28,21 +28,7 @@ public class ElectionController {
     private UserService userService;
 
   
-    //공지사항 상세조회
-    @GetMapping("/view") 
-    public String boardView(@AuthenticationPrincipal UserDetails user, 
-                            @RequestParam(name="electionidx", defaultValue="0") Long idx,
-                             Model model) {
-        if(user != null) {
-            Users loginUser = userService.getUser(user.getUsername());
-            model.addAttribute("user", loginUser);
-        }
 
-        Election election = electionService.electionview(idx);
-
-        model.addAttribute("election", election);
-        return "/election/electionView";
-}
 
     
    
