@@ -60,6 +60,19 @@ public class Election {
     @Column
     private LocalDateTime   enddate;        // 열람 마감일
 
+
+      // ElectionRequestDto의 내용을 이용해 Election 객체를 생성하는 생성자
+      public Election(ElectionRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.grouptype = requestDto.getGrouptype();
+        this.posterpath = requestDto.getPosterpath();
+        this.progress = requestDto.getProgress();
+        this.createdate = LocalDateTime.now(); // 생성일은 현재 날짜로 설정
+        this.startdate = requestDto.getStartdate();
+        this.daeline = requestDto.getDaeline();
+        this.enddate = requestDto.getEnddate();
+    }
+
    // 진행 상황 한글로 반환하는 메서드
    public String getProgressKorean() {
     switch (progress) {

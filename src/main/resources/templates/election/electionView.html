@@ -67,10 +67,12 @@
                         <!-- 관리자 버튼 -->
                         <div sec:authorize="hasRole('ROLE_ADMIN')">
                             <a th:href="@{'/election/updateView/' + ${election.electionidx}}" class="btn btn-primary me-2">수정</a>
+                           
                             <form id="delete-form" th:action="@{'delete/' + ${election.electionidx}}" method="post" class="d-inline">
                                 <input type="hidden" name="_method" value="delete" />
                                 <button id="delete-btn" class="btn btn-danger">삭제</button>
                             </form>
+                            
                         </div>
                     </div>
                 </div>

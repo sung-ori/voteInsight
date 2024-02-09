@@ -32,7 +32,7 @@
                                 <div class="card-body p-5">
                                     <div class="text-center text-lg-start mb-4 mb-lg-0">
                                         <div class="bg-light p-4 rounded-4">
-                                            
+
                                             <div class="row row-cols-1 row-cols-md-3 g-4">
                                                 <!-- 선거 정보 표시 -->
                                                 <div th:each="election : ${elections}" class="col mb-4">
@@ -44,6 +44,14 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                              <!-- 관리자용 버튼    -->
+                                    <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                                        <div class="text-end">
+                                            <a th:href="@{/election/write}" class="btn btn-primary">선거생성</a>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                             </div>
                         </section>
