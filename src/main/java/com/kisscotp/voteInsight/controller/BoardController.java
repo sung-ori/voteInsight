@@ -97,6 +97,27 @@ public class BoardController {
  }
 
 
+    //페이징 
+    // @PageableDefault(page = 1) : page는 기본으로 1페이지를 보여준다.
+    // @GetMapping("/board/paging")
+    // public String paging(@PageableDefault(page = 1) Pageable pageable, @Login SessionUser user, Model model) {
+    //     Page<BoardResponseDto> boardPages = boardService.paging(pageable); 
+    //     /**
+    //      * blockLimit : page 개수 설정
+    //      * 현재 사용자가 선택한 페이지 앞 뒤로 3페이지씩만 보여준다.
+    //      * ex : 현재 사용자가 4페이지라면 2, 3, (4), 5, 6
+    //      */
+    //     int blockLimit = 10;
+    //     int startPage = (((int) Math.ceil(((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
+    //     int endPage = Math.min((startPage + blockLimit - 1), boardPages.getTotalPages());
+ 
+    //     model.addAttribute("boardPages", boardPages);
+    //     model.addAttribute("startPage", startPage);
+    //     model.addAttribute("endPage", endPage);
+    //     return "paging";
+    // }
+}
+
 
 
 
@@ -105,4 +126,3 @@ public class BoardController {
   
    
 
-}
