@@ -102,7 +102,7 @@ public class IndexController {
        return "/election/electionList";
    }
 
-       //공지사항 상세조회
+       //선거 상세조회
     @GetMapping("election/view") 
     public String electionView(@AuthenticationPrincipal UserDetails user, 
                             @RequestParam(name="electionidx", defaultValue="0") Long idx,
