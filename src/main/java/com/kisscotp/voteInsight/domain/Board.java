@@ -2,6 +2,7 @@ package com.kisscotp.voteInsight.domain;
 
 import java.time.LocalDateTime;
 
+import groovy.transform.builder.Builder;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -2,6 +2,8 @@ package com.kisscotp.voteInsight.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.kisscotp.voteInsight.domain.Users;
@@ -25,4 +27,7 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
     // @Query(value = "SELECT * FROM VI_USERS u WHERE u.studentid LIKE :keyword%",nativeQuery=true)
     List<Users> findByStudentidStartingWith(String studentid);
 
+    Page<Users> findByStudentidContaining(String keyword, Pageable pageable);
+
+    Page<Users> findByNameContaining(String name, Pageable pageable);
 }
