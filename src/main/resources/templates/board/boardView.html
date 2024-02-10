@@ -49,12 +49,12 @@
                                <a th:href="@{/board/list}" class="btn btn-primary me-2">목록</a>  
                              
                                 <!-- 관리자만 보이는 버튼들 -->
-                                <!-- <div th:if="${user.roletype == 'ADMIN'}"> -->
-                                    <div class="text-end mt-3">
-                                        <div class="row">
-                                            <div class="col-md-6 offset-md-6">
-                                                <a th:href="@{/board/modify/(boardidx=${board.boardidx})}" class="btn btn-primary me-2">수정</a>                              
-                                               
+                                    <div sec:authorize="hasRole('ROLE_ADMIN')" class="text-end mt-3">
+                                        <div class="d-flex justify-content-end"> 
+                                            <div>
+                                                <a th:href="@{'/board/updateView/' + ${board.boardidx}}" class="btn btn-primary">수정</a>
+                                            </div>
+                                            <div>
                                                 <form id="delete-form" th:action="@{'delete/' + ${board.boardidx}}" method="post">
                                                     <input type="hidden" name="_method" value="delete"/>
                                                     <button id="delete-btn" class="btn btn-danger">삭제</button>
@@ -62,7 +62,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                <!-- </div> -->
+                                    
 
                                 
                                

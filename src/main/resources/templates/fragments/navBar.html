@@ -11,8 +11,8 @@
                         <li class="nav-item"><a class="nav-link" th:href="@{/board/list}">공지사항</a></li>
                         <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN') and hasRole('ROLE_USER')" ><a class="nav-link" href="vote.html">투표하기</a></li>
                         <li class="nav-item"><a class="nav-link" href="voteresult.html">투표결과</a></li>
-                        <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')"><a class="nav-link" th:href="@{/signUp}">유저관리</a></li>
-                        <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')"><a class="nav-link" href="voteresult.html">선거관리</a></li>
+                        <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')"><a class="nav-link" href="voteresult.html">유저관리</a></li>
+                        <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')"><a class="nav-link" th:href="@{/election/list}">선거관리</a></li>
                         <li class="nav-item" sec:authorize="!isAuthenticated()"><a class ="nav-link" th:href="@{/loginForm}">로그인</a></li>
                         <li class="nav-item" sec:authorize="isAuthenticated()"><a class ="nav-link" th:href="@{/logout}">로그아웃</a></li>
                         <li class="nav-item" sec:authorize="isAuthenticated()"><span class ="nav-link" th:text="|${user.name} 님 안녕하세요!|">로그인한 사람</span></li>

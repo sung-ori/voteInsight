@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.kisscotp.voteInsight.domain.Board;
+import com.kisscotp.voteInsight.domain.BoardRequestDto;
+import com.kisscotp.voteInsight.domain.BoardResponseDto;
 import com.kisscotp.voteInsight.repository.BoardRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -12,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class BoardService {
-
 
          private final BoardRepository boardRepository;
 
@@ -31,24 +32,38 @@ public class BoardService {
             
               boardRepository.deleteById(idx);
         }
-
-        //글작성
-      //   public Long write(Board board){
-      //     // return boardRepository.save(board);
-      //  }
-       
         
-         //글 수정
-        // public Long update(Long idx, Board board) {
+        // 글 저장 
+         public BoardResponseDto boardSave(Board board) {
+             Board savedBoard = boardRepository.save(board);
+        
+            return new BoardResponseDto(savedBoard); 
+        
+         }
+        // 글 수정 
+        public void boardUpdate(Long idx, BoardRequestDto requestDto) {
+                Board board = boardRepository.findById(idx)
+                    .orElseThrow(() -> new RuntimeException("Board not found"));
 
-        //     Board board = boardRepository.findById(idx);
-        //     board.update(board.getTitle(), board.getContent());
-        //     boardRepository.save(board);
+             board.update(requestDto.getTitle(), requestDto.getContents(), requestDto.getUsername());
 
-        //     redirectAttributes.addAttribute("boardidx", board.getId());
+            boardRepository.save(board);
+        }
 
-        //     return "redirect:/board/view";
+        // //페이징
+        // public Page<BoardResponseDto> paging(Pageable pageable) {
+        //     int page = pageable.getPageNumber(); // 페이지 번호는 0부터 시작
+        //     int pageLimit = 10; // 한 페이지에 보여줄 글 개수
+            
+        //     // 한 페이지당 10개식 글을 보여주고 정렬 기준은 IDX 기준으로 내림차순
+        //     Page<Board> boardPages = boardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Direction.DESC, "idx")));
+        
+        //     // 목록 : id, title, contents, username
+        //     return boardPages.map(BoardResponseDto::new);
 
         // }
 
-}
+
+ }
+        
+    

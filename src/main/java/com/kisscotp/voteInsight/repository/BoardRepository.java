@@ -3,6 +3,7 @@ package com.kisscotp.voteInsight.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.kisscotp.voteInsight.domain.Board;
+import com.kisscotp.voteInsight.domain.BoardRequestDto;
 /*
  * JpaReopsitory가 제공하는 기본 메서드
  * 
@@ -16,5 +17,7 @@ import com.kisscotp.voteInsight.domain.Board;
  * saveAll(Iterable<S> entities): 여러 개의 엔터티를 저장 또는 업데이트합니다
  */
 public interface BoardRepository extends JpaRepository<Board, Long> {
+
+    Board save(BoardRequestDto requestDto);
     
 }
