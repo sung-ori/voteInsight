@@ -57,6 +57,7 @@
                                                 <th>번호</th>
                                                 <th>이름</th>
                                                 <th>학과</th>
+                                                <th>학년</th>
                                                 <th>학번</th>
                                                 <th>수정</th>
                                             </tr>
@@ -66,8 +67,11 @@
                                                 <td th:text="${idx.index+1}"></td>
                                                 <td th:text="${user.name}"></td>
                                                 <td th:text="${user.grouptype.getValue.toString()}"></td>
+                                                <td th:text="${user.grade} + '학년'"></td>
                                                 <td th:text="${user.studentid}"></td>
-                                                <td><button class="btn btn-secondary text-white">수정</button></td>
+                                                <td><button class="btn btn-secondary text-white">
+                                                    <a th:href="@{/user/update(useridx=${user.useridx})}" class="text-white">수정</a>
+                                                </button></td>
                                                 
                                             </tr>
                                         </tbody>

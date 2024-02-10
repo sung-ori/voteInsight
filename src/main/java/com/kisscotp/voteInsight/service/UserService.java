@@ -3,6 +3,7 @@ package com.kisscotp.voteInsight.service;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -163,5 +164,25 @@ public class UserService implements UserDetailsService {
         }
 
         return users;
+    }
+
+    //
+    public Users getOneUser(Long useridx) {
+        Optional<Users> user =  userRepo.findById(useridx);
+
+        return user.get();
+    }
+    
+    @Transactional
+    public void update(Users user) {
+        log.debug("야 권한을 알려줘"+user.getRoletype().toString());
+        Users findUser =  userRepo.findById(user.getUseridx()).get();
+
+        if (findUser != null) {
+            findUser.setRoletype(user.getRoletype());
+            findUser.setGrade(user.getGrade());
+            findUser.setPhone(user.getPhone());
+        }
+
     }
 }

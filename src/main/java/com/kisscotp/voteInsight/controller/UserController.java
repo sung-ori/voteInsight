@@ -55,5 +55,22 @@ public class UserController {
         return "/admin/userListForm";
     }
 
+    @GetMapping("/update") 
+        public String updateForm (@AuthenticationPrincipal UserDetails user, Model model, Long useridx) {
+            Users updateUser = service.getOneUser(useridx);
+
+            Users loginUser = service.getUser(user.getUsername());
+            model.addAttribute("user", loginUser);
+            model.addAttribute("updateUser", updateUser);
+
+            return "/admin/updateForm";
+        }
+
+    @PostMapping("/update") 
+    public String update(Users user) {
+        
+        service.update(user);
+        return "redirect:/user/list";
+    }
     
 }
