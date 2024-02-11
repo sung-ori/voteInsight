@@ -72,7 +72,7 @@
                                                 <select class="form-select" name="roletype" id="roletype" th:filed="*{RoleType}" >
                                                     <option th:each="role : ${T(com.kisscotp.voteInsight.domain.enums.RoleType).values()}"
                                                             th:value="${role}" th:text="${#strings.capitalize(role.getTitle.toString())}"
-                                                            th:selected="role == ${updateUser.roletype}">
+                                                            th:selected="${role} == ${updateUser.roletype}">
                                                     </option>
                                                 </select>
                                                 <br>
