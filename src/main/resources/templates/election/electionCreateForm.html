@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+        >
+
+    <head>
+        <!-- head, css, js... -->
+        <div th:replace="~{fragments/config :: config}"></div>
+        <!-- 페이지의 간결한 설명 -->
+        <meta name="description" content="signUpAdmin" />
+        <!-- 작성자 -->
+        <meta name="author" content="sung_ori" />
+        <!-- 타이틀 -->
+        <title>회원 등록</title>
+        <script>
+            function submitForm() {
+              // 입력된 날짜 값을 가져옴
+              var startdate = document.getElementById("startdate").value;
+              // 날짜와 시간을 합쳐서 Date 객체 생성
+              var startDateTime = new Date(startdate + "T00:00:00");
+              // 입력된 날짜 값을 가져옴
+              var deadline = document.getElementById("deadline").value;
+              // 날짜와 시간을 합쳐서 Date 객체 생성
+              var deadlineTime = new Date(startdate + "T00:00:00");
+              // 입력된 날짜 값을 가져옴
+              var enddate = document.getElementById("enddate").value;
+              // 날짜와 시간을 합쳐서 Date 객체 생성
+              var endDateTime = new Date(enddate + "T00:00:00");
+        
+              // 변환된 값을 다시 input에 할당
+              document.getElementById("startdate").value = startDateTime.toISOString().split('T')[0];
+              document.getElementById("deadline").value = deadlineTime.toISOString().split('T')[0];
+              document.getElementById("enddate").value = endDateTime.toISOString().split('T')[0];
+        
+              // 폼 제출
+              document.getElementById("elctionForm").submit();
+            }
+          </script>
+    </head>
+
+    <body class="d-flex flex-column h-100"s>
+        <main class="flex-shrink-0">
+            <!-- nav -->
+            <div th:replace="~{fragments/navBar :: navBar}"></div>
+
+            <div class="container px-5 my-5">
+
+                <div class="text-center mb-5">
+                    <h2 class="isplay-5 fw-bolder">
+                        <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">선거 등록</span></h1>
+                    </h2>
+                </div>
+                <div class="row gx-5 justify-content-center">
+                    <div class="col-lg-11 col-xl-8 col-xxl-5">
+                         <!-- Detail Section-->
+                         <section>
+                            <div class="card shadow border-0 rounded-4 mb-5">
+                                <div class="card-body p-5">
+                                    <div class="text-center text-lg-start mb-4 mb-lg-0">
+                                        <div class="bg-light p-4 rounded-4">
+                                            
+                                            <form th:action="@{/election/create}" method="post" id="electionForm" enctype="multipart/form-data">
+                                                <label class="form-label" for="year">선거 제목</label>
+                                                <input type="text" class="form-control" id="title" name="title">
+                                                
+                                                <br>
+                                                <label class="form-label" for="grouptype">대상 학과</label>
+                                                <select class="form-select" name="grouptype" id="group" th:filed="*{GroupType}">
+                                                    <option th:each="group : ${T(com.kisscotp.voteInsight.domain.enums.GroupType).values()}"
+                                                            th:value="${group}" th:text="${#strings.capitalize(group.getValue.toString())}"></option>
+                                                </select>
+                                                <label for="startdate" class="form-label">선거 시작일</label>
+                                                <input type="date" class="form-control" id="startdate" name="startdate">
+                                                <label for="deadline" class="form-label">투표 마감일</label>
+                                                <input type="date" class="form-control" id="deadline" name="deadline">
+                                                <label for="enddate" class="form-label">열람 마감일</label>
+                                                <input type="date" class="form-control" id="enddate" name="enddate">
+                                                <label for="uploadFile" class="form-label">포스터 업로드</label>
+                                                <input type="file" class="form-control" name="uploadFile" id="uploadFile">
+                                                <div class="d-grid gap-2 ">
+                                                    <span>
+                                                        <button type="button" name="back" class="btn btn-danger col-5 mx-2" onclick="javascript:history.back()">뒤로</button>
+                                                        
+                                                        <input type="submit" onsubmit="javascript:submitForm()" name="login" id="login" class="btn bg-gradient-primary-to-secondary text-white col-5 mx-2" value="선거 등록">
+                                                    </span>
+                                                </div>
+                                                <br>
+                                            </form>
+                                        </div>
+                                    </div>
+                                 </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- footer -->
+        <div th:replace="~{fragments/footer :: footer}"></div>
+    </body>
+</html>

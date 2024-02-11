@@ -12,6 +12,7 @@ import com.kisscotp.voteInsight.domain.Users;
 import com.kisscotp.voteInsight.domain.enums.GroupType;
 import com.kisscotp.voteInsight.domain.enums.RoleType;
 import com.kisscotp.voteInsight.repository.BoardRepository;
+import com.kisscotp.voteInsight.repository.ElectionRepository;
 import com.kisscotp.voteInsight.service.UserService;
 
 @SpringBootTest
@@ -27,6 +28,9 @@ class VoteInsightApplicationTests {
 
 	@Autowired
 	BoardRepository boardRepo;
+
+	@Autowired
+	ElectionRepository electionRepo;
 
 	@Autowired
 	PasswordEncoder encoder;
@@ -96,64 +100,64 @@ class VoteInsightApplicationTests {
 	 }
 
 	// 유저 왕창 생성
-	@Test
-	void createManyUsers() {
-		Users user = new Users();
-		// 이름
-		String[] a = {"김","이","박","최","홍","성","연"};
-		String[] b = {"수","진","열","준","상","주","재"};
-		String[] c = {"현","정","호","미","재","영","수"};
-		String name = "";
+	// @Test
+	// void createManyUsers() {
+	// 	Users user = new Users();
+	// 	// 이름
+	// 	String[] a = {"김","이","박","최","홍","성","연"};
+	// 	String[] b = {"수","진","열","준","상","주","재"};
+	// 	String[] c = {"현","정","호","미","재","영","수"};
+	// 	String name = "";
 
-		// 학과 0 ~ 5
-		GroupType[] groups = GroupType.values();
-		GroupType group;
+	// 	// 학과 0 ~ 5
+	// 	GroupType[] groups = GroupType.values();
+	// 	GroupType group;
 
-		// 입학년도
-		String[] years = {"2018","2019","2020","2021"};
-		String year;
+	// 	// 입학년도
+	// 	String[] years = {"2018","2019","2020","2021"};
+	// 	String year;
 
-		// 학년
-		Long[] grades = {1L, 2L, 3L, 4L};
-		Long grade;
+	// 	// 학년
+	// 	Long[] grades = {1L, 2L, 3L, 4L};
+	// 	Long grade;
 
-		// 전화번호
-		String phone = "01067892345";
+	// 	// 전화번호
+	// 	String phone = "01067892345";
 		
-		// int randomA = (int)(Math.random()*6);
-		// int randomB = (int)(Math.random()*6);
-		// int randomC = (int)(Math.random()*6);
-		// int randomG = (int)(Math.random()*4);
+	// 	// int randomA = (int)(Math.random()*6);
+	// 	// int randomB = (int)(Math.random()*6);
+	// 	// int randomC = (int)(Math.random()*6);
+	// 	// int randomG = (int)(Math.random()*4);
 
-		int cnt = 0;
+	// 	int cnt = 0;
 		
-		for (int i = 0; i < years.length; i++) {
+	// 	for (int i = 0; i < years.length; i++) {
 
-			year = years[i];
+	// 		year = years[i];
 
-			for(int j = 0; j < groups.length; j++) {
+	// 		for(int j = 0; j < groups.length; j++) {
 
-					group = groups[j];
+	// 				group = groups[j];
 
-					for (int k = 0; k < 10; k++) {
-						int randomA = (int)(Math.random()*6);
-						int randomB = (int)(Math.random()*6);
-						int randomC = (int)(Math.random()*6);
+	// 				for (int k = 0; k < 10; k++) {
+	// 					int randomA = (int)(Math.random()*6);
+	// 					int randomB = (int)(Math.random()*6);
+	// 					int randomC = (int)(Math.random()*6);
 						
-						name = a[randomA] + b[randomB] + c[randomC];
+	// 					name = a[randomA] + b[randomB] + c[randomC];
 
-						int randomG = (int)(Math.random()*4);
-						grade = grades[randomG];
+	// 					int randomG = (int)(Math.random()*4);
+	// 					grade = grades[randomG];
 
-						user = userService.createUser(year, grade, group, name,phone);
-						userService.save(user);
-					}
+	// 					user = userService.createUser(year, grade, group, name,phone);
+	// 					userService.save(user);
+	// 				}
 
 				
-			}
+	// 		}
 
-		}
-	}
+	// 	}
+	// }
 
 	// 학번 생성기 테스트
 	@Test
@@ -177,4 +181,13 @@ class VoteInsightApplicationTests {
 			System.out.println(i+"회 실시");
 		}
 	}
+
+	// @Test
+	// void createElection() {
+	// 	Election election = new Election();
+
+	// 	election.setCreatedate(LocalDateTime.now());
+	// 	election.setGrouptype(GroupType.ACCOUNTING);
+	// 	election.set
+	// }
 }

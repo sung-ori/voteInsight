@@ -1,6 +1,6 @@
 package com.kisscotp.voteInsight.domain;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import com.kisscotp.voteInsight.domain.enums.GroupType;
 
@@ -49,16 +49,16 @@ public class Election {
     private char            progress;       // 진행 상황 0 = 준비, 1 = 진행중, 2 = 투표 종료 열람 가능, 3 = 열람기간 만료
 
     @Column
-    private LocalDateTime   createdate;     // 선거 생성일
+    private LocalDate   createdate;     // 선거 생성일
 
     @Column
-    private LocalDateTime   startdate;      // 투표 시작일
+    private LocalDate   startdate;      // 투표 시작일
 
     @Column
-    private LocalDateTime   daeline;        // 투표 종료일
+    private LocalDate   daeline;        // 투표 종료일
 
     @Column
-    private LocalDateTime   enddate;        // 열람 마감일
+    private LocalDate   enddate;        // 열람 마감일
 
    // 진행 상황 한글로 반환하는 메서드
    public String getProgressKorean() {
