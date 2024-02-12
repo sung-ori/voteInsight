@@ -61,19 +61,19 @@ public class ElectionController {
     }
 
     // 선거 생성 뷰
-    @GetMapping("/write")
-    public String electionWrite(@AuthenticationPrincipal UserDetails user,
-                                Model model) {
-        ElectionRequestDto requestDto = new ElectionRequestDto();
-        if (user != null) {
-            Users loginUser = userService.getUser(user.getUsername());
-            model.addAttribute("user", loginUser);
-        }
-        model.addAttribute("requestDto", requestDto);
-        model.addAttribute("election", new Election());
+    // @GetMapping("/createForm")
+    // public String electionWrite(@AuthenticationPrincipal UserDetails user,
+    //                             Model model) {
+    //     ElectionRequestDto requestDto = new ElectionRequestDto();
+    //     if (user != null) {
+    //         Users loginUser = userService.getUser(user.getUsername());
+    //         model.addAttribute("user", loginUser);
+    //     }
+    //     model.addAttribute("requestDto", requestDto);
+    //     model.addAttribute("election", new Election());
 
-        return "/election/electionWrite";
-    }
+    //     return "/election/electionCreateForm";
+    // }
 
     // 선거 생성
     @PostMapping("/create")
