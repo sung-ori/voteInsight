@@ -44,14 +44,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-                                              <!-- 관리자용 버튼    -->
-                                    <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-                                        <div class="text-end">
-                                            <a th:href="@{/election/write}" class="btn btn-primary">선거생성</a>
-                                        </div>
-                                    </div>
-                                    
                                 </div>
                             </div>
                         </section>

@@ -30,6 +30,21 @@ public class ElectionController {
     @Autowired
     private UserService userService;
 
+     //선거 목록(관리자용)
+   @GetMapping("/listAdmin")
+   public String electionlist(@AuthenticationPrincipal UserDetails user,Model model) {
+      
+       if(user != null) {
+           Users loginUser = userService.getUser(user.getUsername());
+           model.addAttribute("user", loginUser);
+       }
+      
+       model.addAttribute("elections", electionService.electionlist());
+       
+       return "/election/electionListAdmin";
+   }
+
+
     // 선거 삭제
     @PostMapping("/delete/{electionidx}")
     public String boardDelete(@AuthenticationPrincipal UserDetails user,

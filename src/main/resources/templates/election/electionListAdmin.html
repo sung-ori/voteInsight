@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <!-- head, css, js... -->
+    <div th:replace="~{fragments/config :: config}"></div>
+    <!-- 페이지의 간결한 설명 -->
+    <meta name="description" content="" />
+    <!-- 작성자 -->
+    <meta name="author" content="sung_ori" />
+    <!-- 타이틀 -->
+    <title>선거 목록</title>
+</head>
+
+<body class="d-flex flex-column h-100 bg-light">
+    <!-- nav -->
+    <div th:replace="~{fragments/navBar :: navBar}"></div>
+
+    <div class="container px-5 my-5">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bolder">
+                <span class="text-gradient d-inline">선거 목록</span>
+            </h2>
+        </div>
+        <!-- 선거 목록 -->
+        <div class="table-responsive border rounded p-3">
+            <table class="table table-striped text-center">
+                <thead>
+                    <tr>
+                        <th scope="col">번호</th>
+                        <th scope="col">제목</th>
+                        <th scope="col">투표 대상 그룹</th>
+                        <th scope="col">진행 상태</th>
+                        <th scope="col">투표 종료일</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 선거 목록을 동적으로 생성하는 부분 -->
+                    <tr th:each="election, idx : ${elections}">
+                        <td th:text="${idx.index + 1}">1</td>
+                        <td th:text="${election.title}">선거 제목</td>
+                        <td th:text="${election.grouptype.value}">그룹명</td>
+                        <td th:text="${election.progressKorean}">진행 중</td>
+                        <td th:text="${election.enddate}">2023.03.04</td>
+                        <td>
+                            <!-- 수정, 후보자 등록 버튼 -->
+                            <td class="text-end">
+                                <div class="btn-group" role="group">
+                                    <a th:href="@{'/election/updateView/' + ${election.electionidx}}" class="btn btn-secondary me-2 text-white">수정</a>
+                                    <button type="button" class="btn btn-primary">후보자 등록</button>
+                                </div>
+                            </td>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+
+</html>

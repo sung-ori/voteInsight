@@ -88,7 +88,7 @@ public class IndexController {
         return "/board/boardView";
 }
 
-   //선거 목록
+   //선거 목록(유저 투표하기용)
    @GetMapping("election/list")
    public String electionlist(@AuthenticationPrincipal UserDetails user,Model model) {
       
@@ -99,7 +99,7 @@ public class IndexController {
       
        model.addAttribute("elections", electionService.electionlist());
        
-       return "/election/electionList";
+       return "/election/electionListUser";
    }
 
        //선거 상세조회
