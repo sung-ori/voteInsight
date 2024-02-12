@@ -99,7 +99,7 @@ public class IndexController {
       
        model.addAttribute("elections", electionService.electionlist());
        
-       return "/election/electionListUser";
+       return "/election/listUser";
    }
 
        //선거 상세조회
@@ -118,14 +118,5 @@ public class IndexController {
         return "/election/electionView";
 }
 
-    // 선거 등록 (test)
-    @GetMapping("/election/create")
-    public String electionCreate(@AuthenticationPrincipal UserDetails user,Model model) {
-        if(user != null) {
-            Users loginUser = userService.getUser(user.getUsername());
-            model.addAttribute("user", loginUser);
-        }
-        return "/election/electionCreateForm";
-    }
 
 }

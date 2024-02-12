@@ -49,7 +49,12 @@
                             <!-- 수정, 후보자 등록 버튼 -->
                             <td class="text-end">
                                 <div class="btn-group" role="group">
-                                    <a th:href="@{'/election/updateView/' + ${election.electionidx}}" class="btn btn-secondary me-2 text-white">수정</a>
+                                    <a th:href="@{'/election/update/' + ${election.electionidx}}" class="btn btn-secondary me-2 text-white">수정</a>
+                                   
+                                    <form th:action="@{'/election/delete/' + ${election.electionidx}}" method="post">
+                                        <button type="submit" class="btn btn-danger text-white">삭제</button>
+                                    </form>
+
                                     <button type="button" class="btn btn-primary">후보자 등록</button>
                                 </div>
                             </td>

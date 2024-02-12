@@ -1,5 +1,6 @@
 package com.kisscotp.voteInsight.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -7,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kisscotp.voteInsight.domain.Election;
-import com.kisscotp.voteInsight.domain.ElectionResponseDto;
+import com.kisscotp.voteInsight.domain.ElectionRequestDto;
 import com.kisscotp.voteInsight.repository.ElectionRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -45,6 +46,33 @@ public class ElectionService {
           election.setPosterpath(saveFileName);
           electionRepository.save(election);
         }
+
+         // 선거 수정 
+         public void electionUpdate(Long idx, ElectionRequestDto requestDto) {
+            Election election = electionRepository.findById(idx)
+                .orElseThrow(() -> new RuntimeException("Board not found"));
+
+            // 선거 정보 업데이트
+            election.setTitle(requestDto.getTitle());
+            election.setGrouptype(requestDto.getGrouptype());
+            election.setPosterpath(requestDto.getPosterpath());
+            election.setStartdate(requestDto.getStartdate());
+            election.setDaeline(requestDto.getDaeline());
+            election.setEnddate(requestDto.getEnddate());
+          
+            // 선거의 진행 상태를 계산하여 업데이트
+             LocalDateTime now = LocalDateTime.now();
+            if (now.isBefore(election.getStartdate())) {
+                  election.setProgress('0'); // 준비중
+            } else if (now.isAfter(election.getDeadline())) {
+                  election.setProgress('2'); // 투표 종료 열람 가능
+            } else {
+                election.setProgress('1'); // 진행중
+        }
+
+        electionRepository.save(election);
+    }
+
  }
         
     

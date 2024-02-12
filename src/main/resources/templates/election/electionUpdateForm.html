@@ -48,7 +48,7 @@
 
                 <div class="text-center mb-5">
                     <h2 class="isplay-5 fw-bolder">
-                        <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">선거 등록</span></h1>
+                        <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">선거 수정</span></h1>
                     </h2>
                 </div>
                 <div class="row gx-5 justify-content-center">
@@ -60,7 +60,7 @@
                                     <div class="text-center text-lg-start mb-4 mb-lg-0">
                                         <div class="bg-light p-4 rounded-4">
                                             
-                                                <form th:action="@{/election/create}" method="post" id="electionForm" enctype="multipart/form-data">
+                                                <form th:action="@{/election/update}" method="post" id="electionForm" enctype="multipart/form-data">
                                                 <label class="form-label" for="year">선거 제목</label>
                                                 <input type="text" class="form-control" id="title" name="title">
                                                 
@@ -82,7 +82,10 @@
                                                    
                                                     <span style="display: block; margin-top: 10px;">
                                                         <button type="button" name="back" class="btn btn-danger col-5 mx-2" onclick="javascript:history.back()">뒤로</button>
-                                                        <input type="submit" onsubmit="javascript:submitForm()" name="login" id="login" class="btn bg-gradient-primary-to-secondary text-white col-5 mx-2" value="선거 등록">
+                                                        
+                                                        <input type="submit" onsubmit="javascript:submitForm()" name="login" id="login" class="btn bg-gradient-primary-to-secondary text-white col-5 mx-2" value="선거 수정">
+                                                       
+                                                        
                                                     </span>
                                                     
                                                 </div>
