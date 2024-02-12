@@ -39,15 +39,7 @@ public class ElectionService {
             electionRepository.deleteById(idx);
         }
 
-
-        // 선거 저장 
-        public ElectionResponseDto electionSave(Election election) {
-            Election savedelection = electionRepository.save(election);
-       
-           return new ElectionResponseDto(savedelection); 
-       
-        }
-
+        //선거 생성
         public void save(Election election, MultipartFile uploadFile) {
           String saveFileName = fileService.saveFile(uploadFile, defualtPath+"/posters");
           election.setPosterpath(saveFileName);

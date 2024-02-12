@@ -6,6 +6,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -59,26 +61,6 @@ public class ElectionController {
     }
 
     // 선거 생성
-    // @PostMapping("/writepro")
-    // public String electionWritePro(@ModelAttribute("requestDto") ElectionRequestDto requestDto,
-    //                                @RequestParam("file") MultipartFile file) {
-    //     try {
-    //         String uploadDir = "./posters/";
-    //         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-    //         Path filePath = Paths.get(uploadDir + fileName);
-    //         Files.write(filePath, file.getBytes());
-
-    //         Election election = new Election(requestDto);
-    //         election.setPosterpath(fileName);
-    //         electionService.electionSave(election);
-    //     } catch (IOException e) {
-    //         // 파일 처리 중 오류가 발생할 경우 처리할 예외 로직을 여기에 추가하세요.
-    //         log.error("Failed to process file upload", e);
-    //     }
-
-    //     return "redirect:/election/list";
-    // }
-  
     @PostMapping("/create")
     public String electionCreate(Election election, MultipartFile uploadFile) {
         electionService.save(election,uploadFile);
