@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+        >
+
+    <head>
+        <!-- head, css, js... -->
+        <div th:replace="~{fragments/config :: config}"></div>
+        <!-- 페이지의 간결한 설명 -->
+        <meta name="description" content="" />
+        <!-- 작성자 -->
+        <meta name="author" content="sung_ori" />
+        <!-- 타이틀 -->
+        <title></title>
+    </head>
+
+    <body class="d-flex flex-column h-100 bg-light">
+        <!-- nav -->
+        <div th:replace="~{fragments/navBar :: navBar}"></div>
+
+        <div class="container px-5 my-5">
+
+            <div class="text-center mb-5">
+                <h2 class="isplay-5 fw-bolder">
+                    <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">회원 검색</span></h1>
+                </h2>
+            </div>
+            <button type="button" class="btn btn-primary mb-2"><a th:href="@{/signUp}" class="text-white">회원 등록</a></button>
+            <div class="row gx-5 justify-content-center">
+                <div class="col-lg-11 col-xl-10 col-xxl-10">
+                     <!-- Detail Section-->
+                     <section>
+                        <div class="card shadow border-0 rounded-4 mb-5">
+                            <div class="card-body p-5">
+                                <div class="text-center text-lg-start mb-4 mb-lg-0">
+                                    <form th:action="@{/user/list}" method="get">
+                                    <div class=" align-center bg-light p-4 rounded-4 row">
+                                        <div class="col-3">
+                                            <select class="form-select" name="type" id="type">
+                                                <option value="studentid">학번</option>
+                                                <option value="name">이름</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-7">
+                                            <input class="form-control" type="text" name="keyword" id="keyword">
+                                        </div>
+                                        <div class="col-2">
+                                            <input type="submit" class="btn btn-primary text-white shadow" value="검색"></input>
+                                        </div>
+                                    </div>
+                                    </form>
+                                </div>
+                                <div>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>번호</th>
+                                                <th>이름</th>
+                                                <th>학과</th>
+                                                <th>학년</th>
+                                                <th>학번</th>
+                                                <th>수정</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="user, idx : ${users.content}">
+                                                <td th:text="${idx.index+1}"></td>
+                                                <td th:text="${user.name}"></td>
+                                                <td th:text="${user.grouptype.getValue.toString()}"></td>
+                                                <td th:text="${user.grade} + '학년'"></td>
+                                                <td th:text="${user.studentid}"></td>
+                                                <td><button class="btn btn-secondary text-white">
+                                                    <a th:href="@{/user/update(useridx=${user.useridx})}" class="text-white">수정</a>
+                                                </button></td>
+                                                
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="btn-toolbar justify-content-center">
+                            <div class=" btn-group me-2 text-center textalign" role="group">
+                                <!-- 이전 페이지 버튼 -->
+                                <!-- <button type="button" class="btn bg-info"> -->
+                                    <a th:if="${param.type == null and param.keyword == null}" th:href="@{/user/list(page=0)}" class="btn btn-info">처음</a>
+                                    <a th:if="${param.type != null and param.keyword != null}" th:href="@{/user/list(type=${param.type}, keyword=${param.keyword}, page=0)}" class="btn btn-info">처음</a>
+                                <!-- </button> -->
+                        
+                                    <a th:if="${param.type == null and param.keyword == null and users.hasPrevious}" th:href="@{/user/list(page=${users.number} - 1)}" class="btn btn-info">이전</a>
+                                    <a th:if="${param.type != null and param.keyword != null and users.hasPrevious}" th:href="@{/user/list(type=${param.type}, keyword=${param.keyword}, page=${users.number} - 1)}" class="btn btn-info">이전</a>
+                        
+                                <!-- 페이지 번호 -->
+                                <!-- 전체 페이지가 5 이하인 경우 -->
+                                <!-- <div th:if="${users.totalPages <= 5}">
+                                    <button class="btn bg-light" th:each="pageNumber : ${#numbers.sequence(1, users.totalPages)}" >
+                                        <a th:if="${param.type == null and param.keyword == null}" th:href="@{/user/list(page=${pageNumber})}" th:text="${pageNumber+1}">1</a>
+                                        <a th:if="${param.type != null and param.keyword != null}" th:href="@{/user/list?type=${#request.getParameter('type')}&keyword=${#request.getParameter('keyword')}&page=${pageNumber}}" th:text="${pageNumber}">1</a>
+                                    </button>
+                                </div> -->
+                                <div th:if="${users.number + 5  <= users.totalPages}">
+                                    <!-- 전체 페이지가 5 이상인 경우 -->
+                                        <a th:if="${param.type == null and param.keyword == null}" th:each="pageNumber : ${#numbers.sequence(users.number, users.number + 4)}" th:href="@{/user/list(page=${pageNumber})}" th:text="${pageNumber + 1}" class="btn btn-info">1</a>
+                                        <a th:if="${param.type != null and param.keyword != null}" th:each="pageNumber : ${#numbers.sequence(users.number, users.number + 4)}" th:href="@{/user/list(type=${param.type}, keyword=${param.keyword}, page=${pageNumber})}" th:text="${pageNumber + 1}" class="btn btn-info">1</a>
+                                </div>
+
+                                <div th:if="${users.number + 5  > users.totalPages}">
+                                        <a th:if="${param.type == null and param.keyword == null}" th:each="pageNumber : ${#numbers.sequence(users.number, users.totalPages - 1)}" th:href="@{/user/list(page=${pageNumber})}" th:text="${pageNumber+1}" class="btn btn-info">1</a>
+                                        <a th:if="${param.type != null and param.keyword != null}" th:each="pageNumber : ${#numbers.sequence(users.number, users.totalPages - 1)}" th:href="@{/user/list?(type=${param.type}, keyword=${param.keyword}, page=${pageNumber})}" th:text="${pageNumber + 1}" class="btn btn-info">1</a>
+                                </div>
+                        
+                                <!-- 다음 페이지 버튼 -->
+                                    <a th:if="${param.type == null and param.keyword == null and users.hasNext}" th:href="@{/user/list(page=${users.number} + 1)}" class="btn btn-info">다음</a>
+                                    <a th:if="${param.type != null and param.keyword != null and users.hasNext}" th:href="@{/user/list?(type=${param.type}, keyword=${param.keyword}, page=${users.number} + 1)}" class="btn btn-info">다음</a>
+                        
+                                <!-- <button class="btn btn-info" > -->
+                                    <a th:if="${param.type == null and param.keyword == null}" th:href="@{/user/list(page=${users.totalPages-1})}" class="btn btn-info">마지막</a>
+                                    <a th:if="${param.type != null and param.keyword != null}" th:href="@{/user/list(type=${param.type}, keyword=${param.keyword}, page=${users.totalPages-1})}" class="btn btn-info">마지막</a>
+                                <!-- </button> -->
+                            </div>
+                        </div>
+                        
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <!-- footer -->
+        <div th:replace="~{fragments/footer :: footer}"></div>
+        
+    </body>
+
+</html>
+
+<!-- 
+    html파일 새로 만들 때 이 레이아웃 복사해서 사용하시면 됩니다
+    "페이지 내용 !" 부분에 페이이제 넣고싶은 내용 넣으면 됩니다!
+    물론  div 태그 지워도 되고 body 의 클래스를 변경해도 됩니다 !
+    
+
+    fragments 폴더는 요소들 모음
+    config = js, css 등 head에 들어갈 내용 (기본 설정이라고 생각해도 될 듯!)
+    navBar = 네비게이션 바
+    footer = 푸터
+    공통요소에 수정 필요하면 fragmrnts 폴더 안의 파일 하나만 수정하면 됨미다!
+ -->

@@ -23,10 +23,10 @@ public class BoardResponseDto {
         this.updatetime = board.getUpdatetime();
     }
 
-    private void getBoardidx() {
-        // TODO
+    public Long getBoardidx() {
+        return this.boardidx;
     }
-
+    
 
 
 }

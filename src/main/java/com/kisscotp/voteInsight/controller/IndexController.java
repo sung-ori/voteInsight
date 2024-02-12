@@ -47,6 +47,13 @@ public class IndexController {
         return "/loginForm";
     }
 
+    @GetMapping("signUp")
+    public String signUp(@AuthenticationPrincipal UserDetails user, Model m){
+        Users loginUser = userService.getUser(user.getUsername());
+        m.addAttribute("user", loginUser);
+        return "/admin/signUpForm";
+    }
+
     //공지사항 목록
     @GetMapping("/board/list")
     public String boardlist(@AuthenticationPrincipal UserDetails user,Model model) {
@@ -111,5 +118,14 @@ public class IndexController {
         return "/election/electionView";
 }
 
+    // 선거 등록 (test)
+    @GetMapping("/election/create")
+    public String electionCreate(@AuthenticationPrincipal UserDetails user,Model model) {
+        if(user != null) {
+            Users loginUser = userService.getUser(user.getUsername());
+            model.addAttribute("user", loginUser);
+        }
+        return "/election/electionCreateForm";
+    }
 
 }

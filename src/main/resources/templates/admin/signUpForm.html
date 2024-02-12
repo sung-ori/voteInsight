@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+        >
+
+    <head>
+        <!-- head, css, js... -->
+        <div th:replace="~{fragments/config :: config}"></div>
+        <!-- 페이지의 간결한 설명 -->
+        <meta name="description" content="signUpAdmin" />
+        <!-- 작성자 -->
+        <meta name="author" content="sung_ori" />
+        <!-- 타이틀 -->
+        <title>회원 등록</title>
+        <script>
+            $(document).ready(function() {
+                setDateSlectBox();
+            });
+            function setDateSlectBox() {
+                let now = new Date();
+                let now_year = now.getFullYear();
+
+                $("#year").append("<option value=''>선택</option>");
+
+                // 2005년부터 올해까지
+                for (let i = now_year; i >= 2005; i--) {
+                    $("#year").append("<option value ='"+ i +"'>"+ i + "년" + "</option>")
+                }
+            }
+        </script>
+    </head>
+
+    <body class="d-flex flex-column h-100"s>
+        <main class="flex-shrink-0">
+            <!-- nav -->
+            <div th:replace="~{fragments/navBar :: navBar}"></div>
+
+            <div class="container px-5 my-5">
+
+                <div class="text-center mb-5">
+                    <h2 class="isplay-5 fw-bolder">
+                        <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">회원 등록</span></h1>
+                    </h2>
+                </div>
+                <div class="row gx-5 justify-content-center">
+                    <div class="col-lg-11 col-xl-8 col-xxl-5">
+                         <!-- Detail Section-->
+                         <section>
+                            <div class="card shadow border-0 rounded-4 mb-5">
+                                <div class="card-body p-5">
+                                    <div class="text-center text-lg-start mb-4 mb-lg-0">
+                                        <div class="bg-light p-4 rounded-4">
+                                            
+                                            <form th:action="@{/user/signUp}" method="post" id="singUpForm">
+                                                <label class="form-label" for="year">입학년도</label>
+                                                <select class="form-select" name="year" id="year">
+                                                </select>
+                                                <label class="form-label" for="grade">학년</label>
+                                                <select class="form-select" name="grade" id="grade">
+                                                    <option value="1">1학년</option>
+                                                    <option value="2">2학년</option>
+                                                    <option value="3">3학년</option>
+                                                    <option value="4">4학년</option>
+                                                </select>
+                                                <br>
+                                                <label class="form-label" for="group">학과</label>
+                                                <select class="form-select" name="group" id="group" th:filed="*{GroupType}">
+                                                    <option th:each="group : ${T(com.kisscotp.voteInsight.domain.enums.GroupType).values()}"
+                                                            th:value="${group}" th:text="${#strings.capitalize(group.getValue.toString())}"></option>
+                                                </select>
+                                                <br>
+                                                <label class="form-label" for="name">이름</label>
+                                                <input class="form-control" type="text" name="name" id="name">
+                                                <label class="form-label" for="name">전화번호</label>
+                                                <input class="form-control" type="tel" name="phone" id="phone">
+                                                <br>
+                                                <div class="d-grid gap-2 ">
+                                                    <span>
+                                                        <button type="button" name="back" class="btn btn-danger col-5 mx-2" onclick="javascript:history.back()">뒤로</button>
+                                                        
+                                                        <input type="submit" name="login" id="login" class="btn bg-gradient-primary-to-secondary text-white col-5 mx-2" value="회원 등록">
+                                                    </span>
+                                                </div>
+                                                <br>
+                                            </form>
+                                        </div>
+                                    </div>
+                                 </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- footer -->
+        <div th:replace="~{fragments/footer :: footer}"></div>
+    </body>
+</html>

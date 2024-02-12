@@ -2,6 +2,7 @@ package com.kisscotp.voteInsight.domain;
 
 import java.time.LocalDateTime;
 
+import groovy.transform.builder.Builder;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,7 +11,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -50,7 +50,6 @@ public class Board {
 
  
 
-    @Builder
     public Board(String title, String contents, String username) {
         this.title = title;
         this.contents = contents;
@@ -71,6 +70,6 @@ public class Board {
         this.contents = contents;
         this.username = username;
         this.updatetime = LocalDateTime.now();
-    }
+    }    
 
 }
