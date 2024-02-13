@@ -40,45 +40,61 @@ public class ElectionService {
         electionRepository.deleteById(idx);
     }
 
+    //선거 생성
     public void save(Election election, MultipartFile uploadFile) {
-    LocalDateTime now = LocalDateTime.now();
+    LocalDateTime now1 = LocalDateTime.now();
+    
     String saveFileName = fileService.saveFile(uploadFile, defaultPath+"/posters");
     election.setPosterpath(saveFileName);
+    
+    election.setCreatedate(now1);
 
-    if (election.getStartdate() != null && now.isBefore(election.getStartdate().atStartOfDay())) {
+    LocalDate now = LocalDate.now();
+    LocalDate startdate = election.getStartdate();
+    LocalDate daeline = election.getDaeline();
+    LocalDate enddate = election.getEnddate();
+
+    if (startdate != null && now.isBefore(startdate)) {
         election.setProgress('0'); // 준비중
-    } else if (election.getDaeline() != null && now.isAfter(election.getDaeline().atStartOfDay())) {
+    } else if (startdate != null && (now.isEqual(startdate) || (now.isAfter(startdate) && now.isBefore(daeline)))) {
+        election.setProgress('1'); // 진행중
+    } else if (daeline != null && now.isAfter(daeline) && now.isBefore(enddate)) {
         election.setProgress('2'); // 투표 종료 열람 가능
     } else {
-        election.setProgress('1'); // 진행중
+        election.setProgress('3'); // 열람기간 만료
     }
+
+    
     
     electionRepository.save(election);
 }
 
-    // 선거 수정 
-    public void electionUpdate(Long idx, ElectionRequestDto requestDto,MultipartFile uploadFile) {
-         Election election = electionRepository.findById(idx)
-                 .orElseThrow(() -> new RuntimeException("Election not found"));
-    
-         String saveFileName = fileService.saveFile(uploadFile, defaultPath+"/posters");
-         election.setPosterpath(saveFileName);
-         election.update(requestDto.getTitle(),requestDto.getGrouptype(),requestDto.getCreatedate(),requestDto.getStartdate(),requestDto.getDaeline(),requestDto.getEnddate());
- 
-    // 수정 시간을 기준으로 투표 상태 다시 계산하여 업데이트
-        LocalDate now = LocalDate.now();
-        LocalDate startdate = election.getStartdate();
-        LocalDate daeline = election.getDaeline();
-    
-        if (startdate != null && now.isBefore(startdate)) {
-             election.setProgress('0'); // 준비중
-         } else if (daeline != null && now.isAfter(daeline)) {
-             election.setProgress('2'); // 투표 종료 열람 가능
-         } else {
-             election.setProgress('1'); // 진행중
-        }
 
-         electionRepository.save(election);
+
+      // 선거 수정 
+      public void electionUpdate(Long idx, ElectionRequestDto requestDto,MultipartFile uploadFile) {
+        Election election = electionRepository.findById(idx)
+                .orElseThrow(() -> new RuntimeException("Election not found"));
+   
+        String saveFileName = fileService.saveFile(uploadFile, defaultPath+"/posters");
+        election.setPosterpath(saveFileName);
+        election.update(requestDto.getTitle(),requestDto.getGrouptype(),requestDto.getCreatedate(),requestDto.getStartdate(),requestDto.getDaeline(),requestDto.getEnddate());
+
+   // 수정 시간을 기준으로 투표 상태 다시 계산하여 업데이트
+       LocalDate now = LocalDate.now();
+       LocalDate startdate = election.getStartdate();
+       LocalDate daeline = election.getDaeline();
+       LocalDate enddate = election.getEnddate();
+   
+       if (startdate != null && now.isBefore(startdate)) {
+        election.setProgress('0'); // 준비중
+    } else if (startdate != null && (now.isEqual(startdate) || (now.isAfter(startdate) && now.isBefore(daeline)))) {
+        election.setProgress('1'); // 진행중
+    } else if (daeline != null && now.isAfter(daeline) && now.isBefore(enddate)) {
+        election.setProgress('2'); // 투표 종료 열람 가능
+    } else {
+        election.setProgress('3'); // 열람기간 만료
     }
-
+        electionRepository.save(election);
+   }
 }

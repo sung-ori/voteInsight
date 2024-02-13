@@ -31,7 +31,7 @@ public class VoteController {
 
     //선거결과>선거 목록
    @GetMapping("result")
-   public String electionlist(@AuthenticationPrincipal UserDetails user,Model model) {
+   public String resultList(@AuthenticationPrincipal UserDetails user,Model model) {
       
        if(user != null) {
            Users loginUser = userService.getUser(user.getUsername());
@@ -43,6 +43,9 @@ public class VoteController {
        return "/vote/resultList";
    }
 
+   //선겨결과 조회
    
+
+
 
 }

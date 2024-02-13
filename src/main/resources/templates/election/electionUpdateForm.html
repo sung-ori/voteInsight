@@ -19,9 +19,9 @@
           // 날짜와 시간을 합쳐서 Date 객체 생성
           var startDateTime = new Date(startdate + "T00:00:00");
           // 입력된 날짜 값을 가져옴
-          var deadline = document.getElementById("deadline").value;
+          var daeline = document.getElementById("daeline").value;
           // 날짜와 시간을 합쳐서 Date 객체 생성
-          var deadlineTime = new Date(deadline + "T00:00:00");
+          var daelineTime = new Date(daeline + "T00:00:00");
           // 입력된 날짜 값을 가져옴
           var enddate = document.getElementById("enddate").value;
           // 날짜와 시간을 합쳐서 Date 객체 생성
@@ -29,7 +29,7 @@
     
           // 변환된 값을 다시 input에 할당
           document.getElementById("startdate").value = startDateTime.toISOString().split('T')[0];
-          document.getElementById("deadline").value = deadlineTime.toISOString().split('T')[0];
+          document.getElementById("daeline").value = daelineTime.toISOString().split('T')[0];
           document.getElementById("enddate").value = endDateTime.toISOString().split('T')[0];
     
           // 폼 제출
@@ -73,8 +73,8 @@
                                             </select>
                                             <label for="startdate" class="form-label">선거 시작일</label>
                                             <input type="date" class="form-control" id="startdate" name="startdate" th:value="${election.startdate}">
-                                            <label for="deadline" class="form-label">투표 마감일</label>
-                                            <input type="date" class="form-control" id="deadline" name="deadline" th:value="${election.daeline}">            
+                                            <label for="daeline" class="form-label">투표 마감일</label>
+                                            <input type="date" class="form-control" id="daeline" name="daeline" th:value="${election.daeline}">            
                                             <label for="enddate" class="form-label">열람 마감일</label>
                                             <input type="date" class="form-control" id="enddate" name="enddate" th:value="${election.enddate}">                                         
                                             

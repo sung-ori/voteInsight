@@ -1,5 +1,7 @@
 package com.kisscotp.voteInsight.controller;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,7 +36,7 @@ public class ElectionController {
 
      //선거 목록(유저 투표하기용)
    @GetMapping("/list")
-   public String electionlist(@AuthenticationPrincipal UserDetails user,Model model) {
+   public String electionlistUser(@AuthenticationPrincipal UserDetails user,Model model) {
       
        if(user != null) {
            Users loginUser = userService.getUser(user.getUsername());
@@ -87,13 +89,21 @@ public class ElectionController {
         return "/election/electionCreateForm";
     }
 
-    // 선거 생성
+// 선거 생성
     @PostMapping("/create")
-    public String electionCreate(Election election, MultipartFile uploadFile) {
-        electionService.save(election,uploadFile);
+    public String electionCreate(Election election,
+                                @RequestParam("deadline") LocalDate deadline,
+                                MultipartFile uploadFile) {
+        election.setDaeline(deadline);
+        electionService.save(election, uploadFile);
 
+        // 적절한 페이지로 리다이렉트
         return "redirect:/election/listAdmin";
     }
+
+
+    
+
 
       // 선거 삭제
       @PostMapping("/delete/{electionidx}")
@@ -122,7 +132,7 @@ public class ElectionController {
          }
             
              Election election = electionService.electionview(idx);
-
+             
             model.addAttribute("requestDto",requestDto);
             model.addAttribute("election", election);
         
@@ -135,6 +145,7 @@ public class ElectionController {
         public String electionUpdate(@PathVariable Long electionidx,
                              @ModelAttribute ElectionRequestDto requestDto,
                              @RequestParam("uploadFile") MultipartFile uploadFile) {
+
         electionService.electionUpdate(electionidx, requestDto, uploadFile);
 
         return "redirect:/election/listAdmin";
