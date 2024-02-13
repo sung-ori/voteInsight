@@ -32,6 +32,37 @@ public class ElectionController {
     @Autowired
     private UserService userService;
 
+     //선거 목록(유저 투표하기용)
+   @GetMapping("/list")
+   public String electionlist(@AuthenticationPrincipal UserDetails user,Model model) {
+      
+       if(user != null) {
+           Users loginUser = userService.getUser(user.getUsername());
+           model.addAttribute("user", loginUser);
+       }
+      
+       model.addAttribute("elections", electionService.electionlist());
+       
+       return "/election/electionlistUser";
+    }
+
+       //선거 상세조회
+    @GetMapping("/view") 
+    public String electionView(@AuthenticationPrincipal UserDetails user, 
+                            @RequestParam(name="electionidx", defaultValue="0") Long idx,
+                             Model model) {
+        if(user != null) {
+            Users loginUser = userService.getUser(user.getUsername());
+            model.addAttribute("user", loginUser);
+        }
+
+        Election election = electionService.electionview(idx);
+
+        model.addAttribute("election", election);
+        return "/election/electionView";
+    }
+
+
      //선거 목록(관리자용)
    @GetMapping("/listAdmin")
    public String electionlist(@AuthenticationPrincipal UserDetails user,Model model) {
