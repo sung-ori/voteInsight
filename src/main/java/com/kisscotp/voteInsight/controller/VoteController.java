@@ -38,7 +38,7 @@ public class VoteController {
            model.addAttribute("user", loginUser);
        }
       
-       model.addAttribute("elections", electionService.electionlist());
+       model.addAttribute("elections", electionService.resultElectionlist());
        
        return "/vote/resultList";
    }

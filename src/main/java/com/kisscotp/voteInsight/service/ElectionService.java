@@ -97,4 +97,10 @@ public class ElectionService {
     }
         electionRepository.save(election);
    }
+
+     //결과 조회용 선거 목록
+     public List<Election> resultElectionlist() {
+        return electionRepository.findByProgress('2');
+    }
+
 }
