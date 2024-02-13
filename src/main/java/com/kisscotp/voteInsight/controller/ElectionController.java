@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kisscotp.voteInsight.domain.Election;
@@ -98,16 +99,16 @@ public class ElectionController {
       }
 
 
-      //선거 수정 
-      @PostMapping("/update/{electionidx}") 
-      public String electionUpdate(@PathVariable Long electionidx, 
-                                   @ModelAttribute ElectionRequestDto requestDto) { 
-      
-          electionService.electionUpdate(electionidx, requestDto);
-          
-          return "redirect:/election/listAdmin"; 
-      }
+     // 선거 수정
+     @PostMapping("/update/{electionidx}")
+        public String electionUpdate(@PathVariable Long electionidx,
+                             @ModelAttribute ElectionRequestDto requestDto,
+                             @RequestParam("uploadFile") MultipartFile uploadFile) {
+        electionService.electionUpdate(electionidx, requestDto, uploadFile);
 
+        return "redirect:/election/listAdmin";
+    } 
 
-    }   
+}
+
     

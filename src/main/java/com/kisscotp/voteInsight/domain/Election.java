@@ -1,6 +1,7 @@
 package com.kisscotp.voteInsight.domain;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.kisscotp.voteInsight.domain.enums.GroupType;
 
@@ -49,7 +50,7 @@ public class Election {
     private char            progress;       // 진행 상황 0 = 준비, 1 = 진행중, 2 = 투표 종료 열람 가능, 3 = 열람기간 만료
 
     @Column
-    private LocalDate   createdate;     // 선거 생성일
+    private LocalDateTime   createdate;     // 선거 생성일
 
     @Column
     private LocalDate   startdate;      // 투표 시작일
@@ -60,18 +61,19 @@ public class Election {
     @Column
     private LocalDate   enddate;        // 열람 마감일
 
-
+  
       // ElectionRequestDto의 내용을 이용해 Election 객체를 생성하는 생성자
       public Election(ElectionRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.grouptype = requestDto.getGrouptype();
         this.posterpath = requestDto.getPosterpath();
         this.progress = requestDto.getProgress();
-        this.createdate = LocalDateTime.now(); // 생성일은 현재 날짜로 설정
+        this.createdate = LocalDateTime.now(); 
         this.startdate = requestDto.getStartdate();
         this.daeline = requestDto.getDaeline();
         this.enddate = requestDto.getEnddate();
     }
+
 
    // 진행 상황 한글로 반환하는 메서드
    public String getProgressKorean() {
@@ -88,5 +90,19 @@ public class Election {
             return "알 수 없음";
     }
 }
+
+public void update(String title, GroupType grouptype, LocalDateTime createdate, LocalDate startdate,
+        LocalDate daeline, LocalDate enddate) {
+
+            this.title = title;
+            this.grouptype = grouptype;
+            this.createdate=createdate;
+            this.startdate = startdate;
+            this.daeline = daeline;
+            this.enddate = enddate;
+        
+
+        }
+
 
 }

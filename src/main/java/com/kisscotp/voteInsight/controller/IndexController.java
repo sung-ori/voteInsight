@@ -99,7 +99,7 @@ public class IndexController {
       
        model.addAttribute("elections", electionService.electionlist());
        
-       return "/election/listUser";
+       return "/election/electionlistUser";
    }
 
        //선거 상세조회

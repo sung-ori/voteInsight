@@ -1,14 +1,13 @@
 package com.kisscotp.voteInsight.domain;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.kisscotp.voteInsight.domain.enums.GroupType;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class ElectionRequestDto {
 
     private String title;
@@ -16,9 +15,9 @@ public class ElectionRequestDto {
     private String posterpath;
     private char progress;
     private LocalDateTime createdate;
-    private LocalDateTime startdate;
-    private LocalDateTime daeline;
-    private LocalDateTime enddate;
+    private LocalDate startdate;
+    private LocalDate daeline;
+    private LocalDate enddate;
 
     // 진행 상황 한글로 반환하는 메서드
     public String getProgressKorean() {
