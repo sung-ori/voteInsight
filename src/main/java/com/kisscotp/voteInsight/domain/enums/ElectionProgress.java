@@ -13,7 +13,7 @@ public enum ElectionProgress {
 
     ElectionProgress(String progress) {
         this.progress = progress;
-        
+
     }
     public String getProgress() {
         return this.progress;
