@@ -1,107 +1,93 @@
 <!DOCTYPE html>
-<html lang="ko"
-        xmlns:th="http://www.thymeleaf.org"
-        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
-        >
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
-    <head>
-        <!-- head, css, js... -->
-        <div th:replace="~{fragments/config :: config}"></div>
-        <!-- 페이지의 간결한 설명 -->
-        <meta name="description" content="" />
-        <!-- 작성자 -->
-        <meta name="author" content="sung_ori" />
-        <!-- 타이틀 -->
-        <title></title>
-    </head>
+<head>
+    <!-- head, css, js... -->
+    <div th:replace="~{fragments/config :: config}"></div>
+    <!-- 페이지의 간결한 설명 -->
+    <meta name="description" content="" />
+    <!-- 작성자 -->
+    <meta name="author" content="sung_ori" />
+    <!-- 타이틀 -->
+    <title></title>
+</head>
 
-    <body class="d-flex flex-column h-100 bg-light">
-        <main class="flex-shrink-0">
-            <!-- nav -->
-            <div th:replace="~{fragments/navBar :: navBar}"></div>
-            <!-- 페이지내용 -->
-            <div class="container px-5 my-5">
-                <div class="text-center mb-5">
-                    <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">공지사항 목록</span></h1>
-                </div>
-                <div class="row gx-5 justify-content-center">
-                    <div class="col-lg-11 col-xl-9 col-xxl-8">
-                         <!-- Detail Section-->
-                         <section>
-                            <div class="card shadow border-0 rounded-4 mb-5">
-                                <div class="card-body p-5">
-                                    <div class="text-center text-lg-start mb-4 mb-lg-0">
-                                        <div class="bg-light p-4 rounded-4">
-                                            <!-- Display board details in a table -->
+<body class="d-flex flex-column h-100 bg-light">
+    <main class="flex-shrink-0">
+        <!-- nav -->
+        <div th:replace="~{fragments/navBar :: navBar}"></div>
+        <!-- 페이지내용 -->
+        <div class="container px-5 my-5">
+            <div class="text-center mb-5">
+                <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">공지사항 목록</span></h1>
+            </div>
+            <div class="row gx-5 justify-content-center">
+                <div class="col-lg-11 col-xl-9 col-xxl-8">
+                    <!-- Detail Section-->
+                    <section>
+                        <div class="card shadow border-0 rounded-4 mb-5">
+                            <div class="card-body p-5">
+                                <div class="text-center text-lg-start mb-4 mb-lg-0">
+                                    <div class="bg-light p-4 rounded-4">
+                                        <!-- Display board details in a table -->
                                         <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">글 번호</th>
-                                                <th scope="col">글 제목</th>
-                                                <th scope="col">작성자</th>
-                                                <th scope="col">작성날짜</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr th:each="board : ${boards}">
-                                                <td th:text="${board.boardidx}">1</td>
-                                                <td>
-                                                    <a th:href="@{'view?boardidx=' + ${board.boardidx}}" th:text="${board.title}">제목입니다</a>
-                                                </td>
-                                                <td th:text="${board.username}">관리자</td>
-                                                <td th:text="${board.createtime}">2024.02.01</td> 
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                     <!-- 페이징 -->
-                                     <!-- <nav aria-label="Page navigation">
-                                        <ul class="pagination justify-content-center"> -->
-                                            <!-- 첫 페이지로 이동 -->
-                                            <!-- <li class="page-item">
-                                                <a class="page-link" th:href="@{/board/paging(page=1)}">첫 페이지</a>
-                                            </li> -->
-                                            <!-- 이전 페이지로 이동 -->
-                                            <!-- <li class="page-item" th:classappend="${boardPages.first} ? 'disabled'">
-                                                <a class="page-link" th:href="${boardPages.hasPrevious()} ? @{/board/paging(page=${boardPages.number})} : '#'">이전</a>
-                                            </li> -->
-                                            <!-- 페이지 번호 -->
-                                            <!-- <li th:each="page : ${#numbers.sequence(startPage, endPage)}" th:class="${boardPages.number + 1 == page} ? 'page-item active' : 'page-item'">
-                                                <a class="page-link" th:href="@{/board/paging(page=${page})}" th:text="${page}"></a>
-                                            </li> -->
-                                            <!-- 다음 페이지로 이동 -->
-                                            <!-- <li class="page-item" th:classappend="${boardPages.last} ? 'disabled'">
-                                                <a class="page-link" th:href="${boardPages.hasNext()} ? @{/board/paging(page=${boardPages.number + 2})} : '#'">다음</a>
-                                            </li> -->
-                                            <!-- 마지막 페이지로 이동 -->
-                                            <!-- <li class="page-item">
-                                                <a class="page-link" th:href="@{/board/paging(page=${boardPages.totalPages})}">마지막 페이지</a>
-                                            </li>
-                                        </ul>
-                                    </nav> -->
-                                    
-                                    <!-- 관리자용 버튼          -->
-                                    <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-                                        <div class="text-end">
-                                            <a th:href="@{/board/write}" class="btn btn-primary">글쓰기</a>
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">글 번호</th>
+                                                    <th scope="col">글 제목</th>
+                                                    <th scope="col">작성자</th>
+                                                    <th scope="col">작성날짜</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr th:each="board : ${boards}">
+                                                    <td th:text="${board.boardidx}">1</td>
+                                                    <td>
+                                                        <a th:href="@{'view?boardidx=' + ${board.boardidx}}" th:text="${board.title}">제목입니다</a>
+                                                    </td>
+                                                    <td th:text="${board.username}">관리자</td>
+                                                    <td th:text="${board.createtime}">2024.02.01</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <!-- 페이징처리 -->
+                                        <div class="btn-toolbar justify-content-center">
+                                            <div class=" btn-group me-2 text-center textalign" role="group">
+                                                <!-- 이전 페이지 버튼 -->
+                                                <a th:if="${boards.number != 0}" th:href="@{/board/list(page=0)}" class="btn btn-info">처음</a>
+                                                <a th:if="${boards.number != 0}" th:href="@{/board/list(page=${boards.number} - 1)}" class="btn btn-info">이전</a>
+
+                                                <!-- 전체 페이지 -->
+                                                <div th:if="${boards.number + 1  <= boards.totalPages}">
+                                                    <!-- 전체 페이지가 5 이상인 경우 -->
+                                                    <a th:each="pageNumber : ${#numbers.sequence(0, boards.totalPages - 1)}" th:href="@{/board/list(page=${pageNumber})}" th:text="${pageNumber + 1}" class="btn btn-info"></a>
+                                                </div>
+
+                                                <!-- 다음 페이지 버튼 -->
+                                                <a th:if="${!boards.last}" th:href="@{/board/list(page=${boards.number} + 1)}" class="btn btn-info">다음</a>
+                                                <a th:if="${!boards.last}" th:href="@{/board/list(page=${boards.totalPages - 1})}" class="btn btn-info">마지막</a>
+                                            </div>
+                                        </div>
+
+                                        <!-- 관리자용 버튼 -->
+                                        <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                                            <div class="text-end">
+                                                <a th:href="@{/board/write}" class="btn btn-primary">글쓰기</a>
+                                            </div>
                                         </div>
                                     </div>
-                                    
-
-                                    </div>
-                                    
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </section>
-                    </div>
+                    </section>
                 </div>
             </div>
-        </main>
+        </div>
+    </main>
 
+    <!-- footer -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
 
-        <!-- footer -->
-        <div th:replace="~{fragments/footer :: footer}"></div>
-        
-    </body>
+</body>
+
 </html>

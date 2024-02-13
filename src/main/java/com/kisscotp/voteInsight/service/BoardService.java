@@ -1,7 +1,9 @@
 package com.kisscotp.voteInsight.service;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.kisscotp.voteInsight.domain.Board;
@@ -17,10 +19,19 @@ public class BoardService {
 
          private final BoardRepository boardRepository;
 
-         //글 목록
-         public List<Board> boardlist(){
-            return boardRepository.findAll();
+        //글 목록(페이징처리)
+       
+        public Page<Board> boardList(int page) {
+            Sort sort = Sort.by(Sort.Direction.DESC, "createtime");
+    
+            Pageable pageable = PageRequest.of(page, 10, sort);
+    
+            return boardRepository.findAll(pageable);
         }
+    
+
+
+
 
          //글 상세       
         public Board boardview(Long idx){
