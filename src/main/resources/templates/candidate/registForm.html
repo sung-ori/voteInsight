@@ -175,7 +175,7 @@
                                 <div class="card-body">
                                   <h1 class="card-title" th:text="'기호' + ${candidate.candinumber} + '번'"></h1>
                                   <br>
-                                  <h3 class="card-text" th:text="${candiUser[idx.index].grouptype.value}"></h3>
+                                  <h3 class="card-text" th:text="${candiUser[idx.index].grouptype.value} + '  '+ ${candiUser[idx.index].grade} +  학년"></h3>
                                   <br>
                                   <h3 class="card-text" th:text="${candiUser[idx.index].name}"></h3>
                                 </div>

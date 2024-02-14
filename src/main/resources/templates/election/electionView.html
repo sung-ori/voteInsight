@@ -62,7 +62,14 @@
                         <a th:href="@{/election/list}" class="btn btn-primary">목록</a>
 
                         <!-- 투표하기 버튼 -->
-                        <a th:href="@{'/vote/' + ${election.electionidx}}" class="btn btn-success">투표하기</a>
+                        <div th:if="${user.grouptype} != ${election.grouptype}">
+                            <a class="btn btn-success" disabled>투표 대상이 아닙니다</a>
+                        </div>
+                        <div th:if="${user.grouptype} == ${election.grouptype}">
+                            <a th:if="${isVote} == false" th:href="@{'/vote?electionidx=' + ${election.electionidx}}" class="btn btn-success">투표하기</a>
+                            <a th:if="${isVote} == true"  class="btn btn-danger">투표완료</a>
+                            
+                        </div>
                     </div>
                 </div>
             </div>

@@ -35,7 +35,7 @@ public class ElectionController {
     private UserService userService;
 
      //선거 목록(유저 투표하기용)
-   @GetMapping("/list")
+   @GetMapping("/listUser")
    public String electionlistUser(@AuthenticationPrincipal UserDetails user,Model model) {
       
        if(user != null) {
@@ -53,13 +53,18 @@ public class ElectionController {
     public String electionView(@AuthenticationPrincipal UserDetails user, 
                             @RequestParam(name="electionidx", defaultValue="0") Long idx,
                              Model model) {
+        Users loginUser = new Users(); // 컴파일 에러 피하기 위해 미리 생성 (어차피 여기 들어오려면 로그인 해야 돼서,,)
         if(user != null) {
-            Users loginUser = userService.getUser(user.getUsername());
+            loginUser = userService.getUser(user.getUsername());
             model.addAttribute("user", loginUser);
         }
 
         Election election = electionService.electionview(idx);
 
+        // 선거 했는지 안했는지 조회
+        boolean isVote = electionService.alreadyVote(idx, loginUser.getUseridx());
+
+        model.addAttribute("isVote", isVote);
         model.addAttribute("election", election);
         return "/election/electionView";
     }

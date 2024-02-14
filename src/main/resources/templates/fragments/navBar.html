@@ -9,7 +9,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
                         <li class="nav-item"><a class="nav-link" th:href="@{/board/list}">공지사항</a></li>
-                        <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN') and hasRole('ROLE_USER')" ><a class="nav-link" th:href="@{/election/listUser}">투표하기</a></li>
+                        <li class="nav-item" sec:authorize="hasRole('ROLE_USER')" ><a class="nav-link" th:href="@{/election/listUser}">투표하기</a></li>
                         <li class="nav-item"><a class="nav-link" th:href="@{/vote/result}">투표결과</a></li>
                         <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')"><a class="nav-link" th:href="@{/user/list}">유저관리</a></li>
                         <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')"><a class="nav-link" th:href="@{/election/listAdmin}">선거관리</a></li>

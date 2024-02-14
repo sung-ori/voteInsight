@@ -1,5 +1,7 @@
 package com.kisscotp.voteInsight.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.kisscotp.voteInsight.domain.Vote;
@@ -17,4 +19,7 @@ import com.kisscotp.voteInsight.domain.Vote;
  */
 public interface VoteRepository extends JpaRepository<Vote, Long>{
     
+    public List<Vote> findByUseridx(Long useridx);
+
+    public List<Vote> findByElectionidx(Long electionidx);
 }

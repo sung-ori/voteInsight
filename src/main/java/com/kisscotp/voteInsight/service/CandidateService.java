@@ -37,8 +37,8 @@ public class CandidateService {
 
     public List<CandidateDto> getCandidates(Long electionidx) {
         List<CandidateDto> dtoList = new ArrayList<>();
-
-        List<Candidate> entityList =  candiRepo.findByElectionidx(electionidx);
+        Sort sort = Sort.by(Sort.Direction.ASC,"candinumber");
+        List<Candidate> entityList =  candiRepo.findByElectionidx(electionidx,sort);
 
         if(entityList != null) {
             for (Candidate candidate : entityList) {
@@ -49,9 +49,10 @@ public class CandidateService {
         return dtoList;
     }
 
+    // 후보자의 Users객체 정보를 가져온다.
     public List<Users> getCandidatesUsers(List<CandidateDto> dtoList) {
         List<Users> userList = new ArrayList<>();;
-
+        
         if(dtoList != null) {
             for (CandidateDto dto : dtoList) {
                 userList.add(userRepo.findById(dto.getUseridx()).get());
@@ -62,6 +63,7 @@ public class CandidateService {
         return userList;
     }
 
+    // 검색 시 like검색으로 찾아온다. 선거에 해당하는 그룹만.
     public List<Users> findByStudentidContanting(String studentid,Long electionidx) {
         List<Users> userList = new ArrayList<>();
 
@@ -85,6 +87,7 @@ public class CandidateService {
         return electionRepo.findById(electionidx).get();
     }
 
+    // 후보에 등록한다.
     public void regist(CandidateDto dto, MultipartFile uploadFile) {
         Long candinumber;
         String fileName = fileService.saveFile(uploadFile,defaultPath+"/poster");
