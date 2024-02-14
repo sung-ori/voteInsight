@@ -2,6 +2,7 @@ package com.kisscotp.voteInsight.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.kisscotp.voteInsight.domain.Candidate;
@@ -22,5 +23,6 @@ public interface CandidateRepository extends JpaRepository<Candidate, Long>{
 
     List<Candidate> findByElectionidx(Long electionidx);
 
+    List<Candidate> findByElectionidx(Long electionidx,Sort sort);
     
 }

@@ -1,5 +1,7 @@
 package com.kisscotp.voteInsight.domain;
 
+import com.kisscotp.voteInsight.domain.dto.CandidateDto;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -55,4 +57,13 @@ public class Candidate {
         this.voteCount = voteCount;
     }
 
+    public static Candidate toEntity(CandidateDto dto) {
+        return Candidate.builder()
+                .candidateidx(dto.getCandidateidx())
+                .useridx(dto.getUseridx())
+                .electionidx(dto.getElectionidx())
+                .candinumber(dto.getCandinumber())
+                .imgpath(dto.getImgpath())
+                .build();
+    }
 }

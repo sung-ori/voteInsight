@@ -18,10 +18,10 @@ import com.kisscotp.voteInsight.domain.Vote;
  * saveAll(Iterable<S> entities): 여러 개의 엔터티를 저장 또는 업데이트합니다
  */
 public interface VoteRepository extends JpaRepository<Vote, Long>{
-    List<Vote> findByElectionidx(Long electionidx);
-
-    
-    public List<Vote> findByUseridx(Long useridx);
 
     public List<Vote> findByElectionidx(Long electionidx);
+
+    public List<Vote> findByUseridx(Long useridx);
+
+    
 }
