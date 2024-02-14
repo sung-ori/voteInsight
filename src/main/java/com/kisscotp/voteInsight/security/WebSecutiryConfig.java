@@ -38,7 +38,7 @@ public class WebSecutiryConfig  {
             .requestMatchers("/**").permitAll()// 일단 모든 경로 접근 가능하게 설정
             .anyRequest().authenticated()
         );
-
+        
         http
         .formLogin(login -> login
         .loginPage("/loginForm")

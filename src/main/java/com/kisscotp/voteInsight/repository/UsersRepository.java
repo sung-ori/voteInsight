@@ -30,4 +30,6 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
     Page<Users> findByStudentidContaining(String keyword, Pageable pageable);
 
     Page<Users> findByNameContaining(String name, Pageable pageable);
+
+    List<Users> findByStudentidContaining(String studentid);
 }
