@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+        >
+
+    <head>
+        <!-- head, css, js... -->
+        <div th:replace="~{fragments/config :: config}"></div>
+        <!-- 페이지의 간결한 설명 -->
+        <meta name="description" content="후보자 등록 폼" />
+        <!-- 작성자 -->
+        <meta name="author" content="sung_ori" />
+        <!-- 타이틀 -->
+        <title></title>
+        <script>
+          let electionidx = $("#electionidx").val();
+
+          $(document).ready(function() {
+            $(document).on("click","#regiFormBtn",openRegiForm);
+            $(document).on("click","#submitBtn",function() {
+              let file = $("#uploadFile").val();
+            if(!file) {
+              alert("포스터 파일을 등록해주세요.");
+            }
+            else {
+              alert("포스터 등록은 확인 됨");
+              
+              $("#candidateForm").submit();
+            }
+            });
+          });
+
+          function openRegiForm() {
+            
+            window.open("http://localhost:8888/voteInsight/candidate/searchForm?electionidx="+$("#electionidx").val(),"회원 검색","width=500, height=300, top=200, left=600, resizable=no, scrollbars=no");
+          }
+
+          function updateContent(data) {
+            let grouptype = "";
+              switch(data.grouptype) {
+                  case "ACCOUNTING" : 
+                      grouptype = "회계학과";
+                      break;
+                  case "ADMINISTRATION" :
+                      grouptype = "행정학과";
+                      break;
+                  case "COMPUTERSCIENCE" :
+                      grouptype = "컴퓨터학부";
+                      break;
+                  case "ELECTRONICENGINEERING" :
+                      grouptype = "전자공학과";
+                      break;
+                  case "PHILOSOPHY" :
+                      grouptype = "철학과";
+                      break;
+                  case "PHYSICS" :
+                      grouptype = "물리학과";
+                      break;
+              }
+            $("#registDisplay").html("");
+            $("#registDisplay").html(
+                  "<div class='card-body p-5'>" +
+                    "<div class='text-center text-lg-start mb-4 mb-lg-0'>" +
+                      "<form action='/voteInsight/candidate/regist' method='post' id='candidateForm' name='candidateForm' enctype='multipart/form-data'>" +
+                        "<div class='bg-light p-4 rounded-4'>" +
+                        "<input type='hidden' name='electionidx' value='" + $("#electionidx").val()  +"'>" +
+                        "<input type='hidden' name='useridx' value='" + data.useridx +"'>" +
+                        "<label for='name' class='form-label mt-2'>이름</label>" +
+                        "<input type='text' name='name' id='name' disabled class='form-control' value='" + data.name +"'>" +
+                        "<label for='group' class='form-label mt-2'>학과</label>" +
+                        "<input type='text' name='group' id='group' disabled class='form-control'value='" + grouptype +"'>" +
+                        "<label for='grade' class='form-label mt-2'>학년</label>" +
+                        "<input type='text' name='grade' id='grade' disabled class='form-control'value='" + data.grade +"학년'>" +
+                        "<label for='studentid' class='form-label mt-2'>학번</label>" +
+                        "<input type='text' name='studentid' id='studentid' disabled class='form-control'value='" + data.studentid +"'>" +
+                        "<label for='uploadFile' class='form-label mt-2'>포스터 업로드</label>" +
+                        "<input type='file' class='form-control' name='uploadFile' id='uploadFile'>" +
+                        "<div class='row'>" +
+                          "<div class='col'>" +
+                          "<button type='button' name='back' class='btn btn-danger  col' onclick='javascript:rollback()'>취소</button>" +
+                          "</div>"+
+                          "<div class='col'>" +
+                          "<button type='button'  id='submitBtn' class='btn bg-gradient-primary-to-secondary text-white  col' >후보 등록</button>" + 
+                        "</div>" +
+                        "<br>" +
+                        "</div>" +
+                      "</form>" +
+                    "</div>" +
+                  "</div>"
+            );
+
+          }
+          
+          function rollback() {
+            $("#registDisplay").html("");
+            $("#registDisplay").html(
+              "<h2 class='card-text'><a class='btn btn-primary' id='regiFormBtn'>후보자 추가하기 +</a></h2>" 
+            );
+
+          }
+
+          function submitForm(){
+            let file = $("#uploadFile").val();
+            if(!file) {
+              alert("포스터 파일을 등록해주세요.");
+            }
+            else {
+              alert("포스터 등록은 확인 됨");
+              $("#candidateForm").attr("action", "/voteInsight/candidate/regist");
+	          	$("#candidateForm").attr("method", "post");
+              $("#candidateForm").submit();
+            }
+          }
+        </script>
+    </head>
+
+    <body class="d-flex flex-column h-100 bg-light">
+        <!-- nav -->
+        <div th:replace="~{fragments/navBar :: navBar}"></div>
+        <input type="hidden" id="electionidx" th:value="${election.electionidx}">
+        <div class="container px-5 my-5">
+
+            <div class="text-center mb-5">
+                <h2 class="isplay-5 fw-bolder">
+                    <h2 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline"  th:text="' - ' + ${election.title} + ' - '">선거이름</span></h2>
+                    <h1><span class="text-gradient d-inline" >후보자 등록</span></h1>
+                </h2>
+            </div>
+            
+            <div class="row gx-5 justify-content-center">
+                <div class="col-lg-11 col-xl-10 col-xxl-10">
+                     <!-- Detail Section-->
+                     <section>
+
+                      <div class="text-lg-end" id="registDisplay">
+                        <h2 class="card-text"><a class="btn btn-primary" id="regiFormBtn">후보자 추가하기 +</a></h2>
+                      </div>
+                      
+                      <div th:if="${candiDto == null}">
+                          <div class="card shadow border-0 rounded-4 mb-5" id="nullDisplay">
+                            <div class="card-body p-5">
+                                <div class="text-center text-lg-center mb-4 mb-lg-0">
+                                  <h2 class="card-text">아직 등록된 후보가 없습니다...</h2>
+                                </div>
+                            </div>
+                          </div>
+                      </div>
+
+                        <div th:if="${candiDto != null}">
+                        <div class="text-center mb-5">
+                            <h3 class="isplay-5 fw-bolder">
+                                <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">등록된 후보자</span></h1>
+                            </h3>
+                        </div>
+                        <div th:each="candidate, idx : ${candiDto}" class="card shadow mb-3 " >
+                            <div class="row g-0">
+                              <div class="col-md-4">
+                                <img th:src="@{'/poster/'+${candidate.imgpath}}" class="img-thumbnail rounded-start m-2 p-2" alt="후보자 이미지">
+                              </div>
+                              <div class="col-md-8">
+                                <div class="card-body">
+                                  <h1 class="card-title" th:text="'기호' + ${candidate.candinumber} + '번'"></h1>
+                                  <br>
+                                  <h3 class="card-text" th:text="${candiUser[idx.index].grouptype.value}"></h3>
+                                  <br>
+                                  <h3 class="card-text" th:text="${candiUser[idx.index].name}"></h3>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        
+                        
+                    </section>
+                </div>
+            </div>
+        </div>
+        
+        <!-- footer -->
+        <div th:replace="~{fragments/footer :: footer}"></div>
+        
+    </body>
+
+</html>

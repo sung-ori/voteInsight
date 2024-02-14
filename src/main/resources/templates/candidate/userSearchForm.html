@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+        >
+
+    <head>
+        <!-- head, css, js... -->
+        <div th:replace="~{fragments/config :: config}"></div>
+        <!-- 페이지의 간결한 설명 -->
+        <meta name="description" content="유저 검색 폼" />
+        <!-- 작성자 -->
+        <meta name="author" content="sung_ori" />
+        <!-- 타이틀 -->
+        <title></title>
+
+        <script>
+            $(document).ready(function() {
+                $("#searchBtn").click(
+                    searchSubmit
+                );
+            $(document).on("click",".selectBtn",function() {
+                alert("클릭됨");
+                let idx = $(this).val();
+                alert(idx);
+                selectUser(idx);
+            })
+               
+            });
+            
+        
+
+            function searchSubmit() {
+                $.ajax({
+                        url:"http://localhost:8888/voteInsight/candidate/search",
+                        method:"GET",
+                        dataType:"json",
+                        data: {
+                            studentid : $("#studentid").val(),
+                            electionidx : $("#electionidx").val()
+
+                        },
+                        success: function(data) {
+                            
+                            alert("일단 성공!")
+                            if($.isEmptyObject(data)) {
+                                alert("해당하는 학생이 존재하지 않습니다.");
+                            }
+                            else {
+                                $("#resultBox").html(
+                                    "<table class='table'>" +
+                                        "<thead>" +
+                                            "<tr>" +
+                                            "<th>번호</th><th>이름</th><th>학과</th><th>학년</th><th>학번</th><th>선택</th>" +
+                                            "</tr>" +
+                                        "</thead>" +
+                                        "<tbody id='tableBody'> </tbody>" +
+                                    "</table>"
+                                );
+                                $.each(data,function(idx,user) {
+                                    let grouptype = "";
+                                    switch(user.grouptype) {
+                                        case "ACCOUNTING" : 
+                                            grouptype = "회계학과";
+                                            break;
+                                        case "ADMINISTRATION" :
+                                            grouptype = "행정학과";
+                                            break;
+                                        case "COMPUTERSCIENCE" :
+                                            grouptype = "컴퓨터학부";
+                                            break;
+                                        case "ELECTRONICENGINEERING" :
+                                            grouptype = "전자공학과";
+                                            break;
+                                        case "PHILOSOPHY" :
+                                            grouptype = "철학과";
+                                            break;
+                                        case "PHYSICS" :
+                                            grouptype = "물리학과";
+                                            break;
+                                    }
+
+                                    $("#tableBody").append(
+                                        "<tr>" +
+                                            "<td>"+ (idx+1) + "</td>" +
+                                            "<td>" + user.name + "</td>" +
+                                            "<td>" + grouptype + "</td>" +
+                                            "<td>" + user.grade +"학년" + "</td>" +
+                                            "<td>" + user.studentid + "</td>" +
+                                            "<td>" +
+                                                "<button value='" + user.useridx + "' class='btn btn-secondary text-white selectBtn'>" +
+                                                    "선택" +
+                                                "</button>" +
+                                            "</td>" +
+                                        "</tr>"
+                                    )
+                                });
+                            }
+                        },
+                        error: function(e) {
+                            alert("현재 시스템에 문제가 생겼습니다.");
+                            console.log(JSON.stringify(e));
+                        }
+
+                    })
+            }
+            
+            function selectUser(idx) {
+                let useridx = idx;
+                // alert(useridx);
+
+                $.ajax({
+                    url:"http://localhost:8888/voteInsight/candidate/selectUser",
+                    method: "GET",
+                    dataType: "json",
+                    data:{
+                        "useridx" : useridx
+                    },
+                    success :function(data) {
+                        opener.updateContent(data);
+                        window.close();
+                    },
+                    error : function(e) {
+                        alert(JSON.stringify(e));
+                        alert("시스템에 문제가 발생했습니다.");
+                        console.log(JSON.stringify(e));
+                    }
+                });
+            }
+        </script>
+    </head>
+
+    <body class="d-flex flex-column h-100 bg-light">
+        <!-- nav -->
+        
+
+        <div class="container justify-content-center">
+            
+            <!-- 페이지 내용! -->
+                <div class="row justify-content-center mt-4">
+                    <!-- <div class="col-auto">
+                        <label for="studentid" class="col-form-label mg-2"> 학번 </label>
+                    </div> -->
+                    <div class="col-8">
+                        <input type="text" name="studentid" id="studentid" class="form-control ">
+                        <input type="hidden" name="electionidx" id="electionidx" th:value="${election.electionidx}">
+                    </div>
+                    <div class="col-auto">
+                        <input type="button" value="검색" class="btn btn-primary mg-2" id="searchBtn">
+                    </div>
+                </div>
+                <div class="form-text text-center mt-2 mx-auto" id="resultBox">
+                    <span class="p3">학번을 입력해 검색해주세요.</span>
+                </div>
+        </div>
+
+        <!-- footer -->
+        
+        
+    </body>
+
+</html>
+
+<!-- 
+    html파일 새로 만들 때 이 레이아웃 복사해서 사용하시면 됩니다
+    "페이지 내용 !" 부분에 페이이제 넣고싶은 내용 넣으면 됩니다!
+    물론  div 태그 지워도 되고 body 의 클래스를 변경해도 됩니다 !
+    
+
+    fragments 폴더는 요소들 모음
+    config = js, css 등 head에 들어갈 내용 (기본 설정이라고 생각해도 될 듯!)
+    navBar = 네비게이션 바
+    footer = 푸터
+    공통요소에 수정 필요하면 fragmrnts 폴더 안의 파일 하나만 수정하면 됨미다!
+ -->

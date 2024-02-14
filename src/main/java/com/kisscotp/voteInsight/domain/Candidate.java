@@ -1,5 +1,7 @@
 package com.kisscotp.voteInsight.domain;
 
+import com.kisscotp.voteInsight.domain.dto.CandidateDto;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,6 +27,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Candidate {
 
     @Id
@@ -41,4 +45,16 @@ public class Candidate {
 
     @Column
     private String  imgpath;        // 홍보 이미지 경로
+
+    public static Candidate toEntity(CandidateDto dto) {
+        
+        return Candidate.builder()
+                .candidateidx(dto.getCandidateidx())
+                .useridx(dto.getUseridx())
+                .electionidx(dto.getElectionidx())
+                .candinumber(dto.getCandinumber())
+                .imgpath(dto.getImgpath())
+                .build();
+    }
+    
 }

@@ -55,7 +55,7 @@
                                         <button type="submit" class="btn btn-danger text-white">삭제</button>
                                     </form>
 
-                                    <button type="button" class="btn btn-primary">후보자 등록</button>
+                                    <button type="button" class="btn btn-primary"><a class="text-white" th:href="@{'/candidate/registForm?electionidx=' + ${election.electionidx}}">후보자 등록</a></button>
                                 </div>
                             </td>
                         </td>
