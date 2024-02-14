@@ -36,7 +36,7 @@ public class Vote {
     private Long            electionidx;    // 선거의 인덱스
 
     @Column
-    private Long            cadidateidx;    // 후보의 인덱스
+    private Long            candidateidx;    // 후보의 인덱스
 
     @Column
     private Long            useridx;        // 투표자의 인덱스

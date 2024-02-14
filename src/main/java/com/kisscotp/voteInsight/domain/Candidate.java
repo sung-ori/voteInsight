@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,4 +42,15 @@ public class Candidate {
 
     @Column
     private String  imgpath;        // 홍보 이미지 경로
+
+    @Transient // 데이터베이스에 매핑X
+    private String  candidatename;  // 후보자의 이름
+
+    @Transient // 데이터베이스에 매핑X
+    private Long    voteCount;      // 후보자의 투표 수
+
+    public void setVoteCount(Long voteCount) {
+        this.voteCount = voteCount;
+    }
+
 }
