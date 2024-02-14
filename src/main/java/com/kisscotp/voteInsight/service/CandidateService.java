@@ -107,4 +107,20 @@ public class CandidateService {
         candiRepo.save(candidate);
         
     }
+
+    public boolean doubleCheck(Long useridx, Long electionidx) {
+        boolean result = false;
+
+        List<Candidate> list = candiRepo.findByElectionidx(electionidx);
+
+        for (Candidate candi : list) {
+            System.out.println(candi.toString());
+            if (candi.getUseridx().equals(useridx)) {
+                result = true;
+                break;
+            }
+        }
+
+        return result;
+    }
 }

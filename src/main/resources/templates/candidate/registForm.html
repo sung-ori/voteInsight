@@ -18,17 +18,7 @@
 
           $(document).ready(function() {
             $(document).on("click","#regiFormBtn",openRegiForm);
-            $(document).on("click","#submitBtn",function() {
-              let file = $("#uploadFile").val();
-            if(!file) {
-              alert("포스터 파일을 등록해주세요.");
-            }
-            else {
-              alert("포스터 등록은 확인 됨");
-              
-              $("#candidateForm").submit();
-            }
-            });
+            $(document).on("click","#submitBtn",submitForm);
           });
 
           function openRegiForm() {
@@ -65,7 +55,7 @@
                       "<form action='/voteInsight/candidate/regist' method='post' id='candidateForm' name='candidateForm' enctype='multipart/form-data'>" +
                         "<div class='bg-light p-4 rounded-4'>" +
                         "<input type='hidden' name='electionidx' value='" + $("#electionidx").val()  +"'>" +
-                        "<input type='hidden' name='useridx' value='" + data.useridx +"'>" +
+                        "<input type='hidden' name='useridx'id='useridx' value='" + data.useridx +"'>" +
                         "<label for='name' class='form-label mt-2'>이름</label>" +
                         "<input type='text' name='name' id='name' disabled class='form-control' value='" + data.name +"'>" +
                         "<label for='group' class='form-label mt-2'>학과</label>" +
@@ -102,14 +92,37 @@
 
           function submitForm(){
             let file = $("#uploadFile").val();
+
+
             if(!file) {
               alert("포스터 파일을 등록해주세요.");
             }
             else {
-              alert("포스터 등록은 확인 됨");
-              $("#candidateForm").attr("action", "/voteInsight/candidate/regist");
-	          	$("#candidateForm").attr("method", "post");
-              $("#candidateForm").submit();
+              $.ajax({
+                url: "http://localhost:8888/voteInsight/candidate/doubleCheck",
+                method : "GET",
+                data: {
+                  "useridx" : $("#useridx").val(),
+                  "electionidx" : $("#electionidx").val()
+                },
+                dataType : "json",
+                success : function(data) {
+                  
+                  if (data == true) {
+                    alert("이미 등록된 후보입니다.");
+                  }
+                  else {
+                    $("#candidateForm").submit();
+                    alert("후보가 등록되었습니다.");
+                  }
+                },
+                error : function(e) {
+                  alert("시스템에 에러가 발생했습니다.");
+                  console.log(JSON.stringify(e));
+                }
+              })
+              
+              
             }
           }
         </script>
