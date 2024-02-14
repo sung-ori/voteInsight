@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <!-- head, css, js... -->
+    <div th:replace="~{fragments/config :: config}"></div>
+    <!-- 페이지의 간결한 설명 -->
+    <meta name="description" content="" />
+    <!-- 작성자 -->
+    <meta name="author" content="sung_ori" />
+    <!-- 타이틀 -->
+    <title>투표결과상세보기</title>
+</head>
+
+<body class="d-flex flex-column h-100 bg-light">
+<main class="flex-shrink-0">
+    <!-- nav -->
+    <div th:replace="~{fragments/navBar :: navBar}"></div>
+    <!-- 페이지내용 -->
+    <div class="container px-5 my-5">
+        <div class="text-center mb-5">
+        </div>
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-11 col-xl-9 col-xxl-8">
+                <!-- Detail Section-->
+                <div>
+                    <table class="table">
+                        <thead>
+                        </thead>
+                        <tbody>
+
+                        <tr>
+                            <th scope="row">선거 제목</th>
+                            <td th:text="${election.title}">선거 제목</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row"></th>
+                            <td>
+                                <img th:src="@{${'/posters/' + election.posterpath}}" alt="포스터 이미지" style="max-width: 250px; max-height: 250px;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">당선자</th>
+                            <td th:text="${election.grouptype.value}">당선자</td>
+                        </tr>
+                 
+
+                        </tbody>
+                    </table>
+
+                    
+               
+                          <!-- 목록 버튼 -->
+                    <div class="mt-3 d-flex justify-content-between">
+                        <a th:href="@{/election/list}" class="btn btn-primary">목록</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- footer -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+
+</html>

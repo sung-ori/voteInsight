@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kisscotp.voteInsight.domain.Election;
 import com.kisscotp.voteInsight.domain.Users;
 import com.kisscotp.voteInsight.service.ElectionService;
 import com.kisscotp.voteInsight.service.UserService;
@@ -43,7 +45,22 @@ public class VoteController {
        return "/vote/resultList";
    }
 
-   //선겨결과 조회
+   //선겨결과 상세조회
+    @GetMapping("/view") 
+    public String resultView(@AuthenticationPrincipal UserDetails user, 
+                            @RequestParam(name="electionidx", defaultValue="0") Long idx,
+                             Model model) {
+        if(user != null) {
+            Users loginUser = userService.getUser(user.getUsername());
+            model.addAttribute("user", loginUser);
+        }
+
+        Election election = electionService.electionview(idx);
+
+        model.addAttribute("election", election);
+        return "/vote/resultView";
+    }
+
    
 
 
