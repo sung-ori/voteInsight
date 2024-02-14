@@ -2,6 +2,7 @@ package com.kisscotp.voteInsight.service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -31,7 +32,16 @@ public class ElectionService {
 
     //선거 목록
     public List<Election> electionlist() {
-        return electionRepository.findAll();
+        List<Election> list =  electionRepository.findAll();
+        List<Election> electionList = new ArrayList<>();
+
+        for(Election election : list) {
+            if(election.getProgress() == '1') {
+                electionList.add(election);
+            }
+        }
+        
+        return  electionList;
     }
 
     //선거 상세
