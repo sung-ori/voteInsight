@@ -21,4 +21,7 @@ public interface VoteRepository extends JpaRepository<Vote, Long>{
     List<Vote> findByElectionidx(Long electionidx);
 
     
+    public List<Vote> findByUseridx(Long useridx);
+
+    public List<Vote> findByElectionidx(Long electionidx);
 }

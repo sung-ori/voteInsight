@@ -70,7 +70,9 @@ public class IndexController {
         
         List<CandidateDto> dtoList = candiService.getCandidates(electionidx);
         Election election = candiService.getElection(electionidx);
-
+        if(dtoList.isEmpty()) {
+            dtoList = null;
+        }
         List<Users> userList = candiService.getCandidatesUsers(dtoList);
 
         log.debug("선거 인덱스 값을 알려주세요." + electionidx );

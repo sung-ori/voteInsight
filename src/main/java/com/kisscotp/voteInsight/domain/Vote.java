@@ -2,6 +2,8 @@ package com.kisscotp.voteInsight.domain;
 
 import java.time.LocalDateTime;
 
+import com.kisscotp.voteInsight.domain.dto.VoteDto;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,6 +29,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Vote {
     
     @Id
@@ -46,4 +50,16 @@ public class Vote {
 
     @Column
     private String          ip;             // 투표 장소의 ip주소
+
+    public static Vote toEntity(VoteDto dto) {
+
+            return Vote.builder()
+                .voteidx(dto.getVoteidx())
+                .electionidx(dto.getElectionidx())
+                .candidateidx(dto.getCandidateidx())
+                .useridx(dto.getUseridx())
+                .votetime(dto.getVotetime())
+                .ip(dto.getIp())
+                .build();
+    }
 }

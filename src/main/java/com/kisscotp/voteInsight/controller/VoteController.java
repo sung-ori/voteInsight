@@ -8,12 +8,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kisscotp.voteInsight.domain.Candidate;
 import com.kisscotp.voteInsight.domain.Election;
 import com.kisscotp.voteInsight.domain.Users;
+import com.kisscotp.voteInsight.domain.dto.CandidateDto;
+import com.kisscotp.voteInsight.domain.dto.VoteDto;
+import com.kisscotp.voteInsight.service.CandidateService;
 import com.kisscotp.voteInsight.service.ElectionService;
 import com.kisscotp.voteInsight.service.UserService;
 import com.kisscotp.voteInsight.service.VoteService;
@@ -34,6 +39,9 @@ public class VoteController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    CandidateService candiService;
+
     //선거결과>선거 목록
    @GetMapping("result")
    public String resultList(@AuthenticationPrincipal UserDetails user,Model model) {
@@ -48,25 +56,50 @@ public class VoteController {
        return "/vote/resultList";
    }
 
-   //선겨결과 조회
-      @GetMapping("resultsView")
-    public String voteResult(@AuthenticationPrincipal UserDetails user, 
-                             @RequestParam(name="electionidx", defaultValue="0") Long idx,
-                              Model model) {
+       
 
-           if(user != null) {
+    @GetMapping("")
+    public String voteForm(@AuthenticationPrincipal UserDetails user, Long electionidx, Model model) {
+    
+        if(user != null) {
             Users loginUser = userService.getUser(user.getUsername());
             model.addAttribute("user", loginUser);
         }
-        List<Candidate> candidates = service.getCandidates(idx);
-
-        model.addAttribute("candidates", candidates); 
-
-        Election election = electionService.electionview(idx);
+        Election election = candiService.getElection(electionidx);
         model.addAttribute("election", election);
-        
-        return "/vote/resultView";
+        List<CandidateDto> dtoList = candiService.getCandidates(electionidx);
+        model.addAttribute("candidates", dtoList);
+        List<Users> candiUserList = candiService.getCandidatesUsers(dtoList);
+        model.addAttribute("candiUser", candiUserList);
+
+        return "/vote/voteForm";
+    }
+
+    @PostMapping("/vote")
+    @ResponseBody
+    public boolean vote(@AuthenticationPrincipal UserDetails user, VoteDto dto) {
+        Users voteUser = userService.getUser(user.getUsername());
+        boolean result = service.vote(voteUser,dto);
+        return result;
     }
     
-
+     //선겨결과 조회
+     @GetMapping("resultsView")
+     public String voteResult(@AuthenticationPrincipal UserDetails user, 
+                              @RequestParam(name="electionidx", defaultValue="0") Long idx,
+                               Model model) {
+ 
+            if(user != null) {
+             Users loginUser = userService.getUser(user.getUsername());
+             model.addAttribute("user", loginUser);
+                }
+         List<Candidate> candidates = service.getCandidates(idx);
+ 
+         model.addAttribute("candidates", candidates); 
+ 
+         Election election = electionService.electionview(idx);
+         model.addAttribute("election", election);
+         
+         return "/vote/resultView";
+    }
 }

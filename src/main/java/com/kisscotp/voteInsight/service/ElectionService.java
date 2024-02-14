@@ -10,7 +10,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kisscotp.voteInsight.domain.Election;
 import com.kisscotp.voteInsight.domain.ElectionRequestDto;
+import com.kisscotp.voteInsight.domain.Vote;
 import com.kisscotp.voteInsight.repository.ElectionRepository;
+import com.kisscotp.voteInsight.repository.VoteRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,6 +23,8 @@ public class ElectionService {
     private final ElectionRepository electionRepository;
 
     private final FileService fileService;
+
+    private final VoteRepository voteRepository;
 
     @Value("${spring.servlet.multipart.location}")
     String defaultPath;
@@ -102,5 +106,18 @@ public class ElectionService {
      public List<Election> resultElectionlist() {
         return electionRepository.findByProgress('2');
     }
+    // 선거 상세조회에서 투표 여부 확인
+    public boolean alreadyVote(Long electionidx, Long useridx) {
+        boolean result = false;
 
+        List<Vote> votes = voteRepository.findByUseridx(useridx);
+
+        for (Vote vote : votes) {
+            if (vote.getElectionidx().equals(electionidx)) {
+                result = true;
+            }
+        }
+
+        return result;
+    }
 }

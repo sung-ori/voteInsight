@@ -64,5 +64,13 @@ public class CandidateController {
         return"redirect:/candidate/registForm?electionidx="+dto.getElectionidx(); 
     }
     
+    @GetMapping("/doubleCheck")
+    @ResponseBody
+    public boolean doubleCheck(Long useridx, Long electionidx) {
+        log.debug("유저 : " + useridx + "선거 : " + electionidx);
+        boolean result = service.doubleCheck(useridx, electionidx);
+        log.debug("참 거짓 알려줘 : " + result);
+        return result;
+    }
 }
 
