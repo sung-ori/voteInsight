@@ -1,5 +1,7 @@
 package com.kisscotp.voteInsight.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.kisscotp.voteInsight.domain.Vote;
@@ -16,5 +18,7 @@ import com.kisscotp.voteInsight.domain.Vote;
  * saveAll(Iterable<S> entities): 여러 개의 엔터티를 저장 또는 업데이트합니다
  */
 public interface VoteRepository extends JpaRepository<Vote, Long>{
+    List<Vote> findByElectionidx(Long electionidx);
+
     
 }

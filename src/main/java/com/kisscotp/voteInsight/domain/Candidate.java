@@ -1,7 +1,5 @@
 package com.kisscotp.voteInsight.domain;
 
-import com.kisscotp.voteInsight.domain.dto.CandidateDto;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -46,15 +45,14 @@ public class Candidate {
     @Column
     private String  imgpath;        // 홍보 이미지 경로
 
-    public static Candidate toEntity(CandidateDto dto) {
-        
-        return Candidate.builder()
-                .candidateidx(dto.getCandidateidx())
-                .useridx(dto.getUseridx())
-                .electionidx(dto.getElectionidx())
-                .candinumber(dto.getCandinumber())
-                .imgpath(dto.getImgpath())
-                .build();
+    @Transient // 데이터베이스에 매핑X
+    private String  candidatename;  // 후보자의 이름
+
+    @Transient // 데이터베이스에 매핑X
+    private Long    voteCount;      // 후보자의 투표 수
+
+    public void setVoteCount(Long voteCount) {
+        this.voteCount = voteCount;
     }
-    
+
 }
