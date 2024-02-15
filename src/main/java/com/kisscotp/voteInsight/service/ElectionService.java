@@ -30,7 +30,7 @@ public class ElectionService {
     @Value("${spring.servlet.multipart.location}")
     String defaultPath;
 
-    //선거 목록
+    //선거 목록-유저용
     public List<Election> electionlist() {
         List<Election> list =  electionRepository.findAll();
         List<Election> electionList = new ArrayList<>();
@@ -43,6 +43,14 @@ public class ElectionService {
         
         return  electionList;
     }
+
+    //선거 목록-관리자용
+    public List<Election> electionlistAdmin() {
+        List<Election> electionList =  electionRepository.findAll();
+        return  electionList;
+    }
+
+
 
     //선거 상세
     public Election electionview(Long idx) {
