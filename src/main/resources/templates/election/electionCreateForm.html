@@ -14,27 +14,60 @@
         <!-- 타이틀 -->
         <title>선거등록</title>
         <script>
-            function submitForm() {
-              // 입력된 날짜 값을 가져옴
-              var startdate = document.getElementById("startdate").value;
-              // 날짜와 시간을 합쳐서 Date 객체 생성
-              var startDateTime = new Date(startdate + "T00:00:00");
-              // 입력된 날짜 값을 가져옴
-              var deadline = document.getElementById("deadline").value;
-              // 날짜와 시간을 합쳐서 Date 객체 생성
-              var deadlineTime = new Date(startdate + "T00:00:00");
-              // 입력된 날짜 값을 가져옴
-              var enddate = document.getElementById("enddate").value;
-              // 날짜와 시간을 합쳐서 Date 객체 생성
-              var endDateTime = new Date(enddate + "T00:00:00");
-        
-              // 변환된 값을 다시 input에 할당
-              document.getElementById("startdate").value = startDateTime.toISOString().split('T')[0];
-              document.getElementById("deadline").value = deadlineTime.toISOString().split('T')[0];
-              document.getElementById("enddate").value = endDateTime.toISOString().split('T')[0];
-        
-              // 폼 제출
-              document.getElementById("elctionForm").submit();
+            $(document).ready(function() {
+                $(document).on("#Btn","click",formSubmit)
+            });
+            
+            function formSubmit() {
+                let title = $("#title").val();
+                let file = $("#uploadFile").val();
+                let createdate = new Date();
+                let startdate = new Date($("#startdate").val());
+                let deadline = new Date($("#deadline").val()) ;
+                let enddate = new Date($("#enddate").val()) ;
+                let date1 = $("#startdate").val();
+                let date2 = $("#deadline").val();
+                let date3 = $("#enddate").val();
+
+                if(title == "") {
+                    alert("선거 제목을 입력해주세요.");
+                    return;
+                }
+                
+                if(!date1) {
+                    alert("선거 시작일을 입력해주세요.");
+                    return;
+                }
+                if(createdate > startdate) {
+                    alert("선거 시작일은 생성일보다 빠를 수 없습니다.");
+                    return;
+                }
+
+                if(!date2) {
+                    alert("투표 마감일을 입력해주세요.");
+                    return;
+                } if(startdate > deadline) {
+                    alert("투표 마감일은 선거 시작일보다 빠를 수 없습니다.");
+                    return;
+                }
+
+
+                if(!date3) {
+                    alert("열람 마감일을 입력해주세요.");
+                    return;
+                }
+
+                if (deadline > enddate) {
+                    alert("열람 마감일은 투표 마감일보다 빠를 수 없습니다.")
+                    return;
+                }
+
+                if(!file) {
+                    alert("선거 포스터를 업로드 해주세요.");
+                    return;
+                }
+
+                $("#electionForm").submit();
             }
           </script>
     </head>
@@ -83,7 +116,7 @@
                                                    
                                                     <span style="display: block; margin-top: 10px;">
                                                         <button type="button" name="back" class="btn btn-danger col-5 mx-2" onclick="javascript:history.back()">뒤로</button>
-                                                        <input type="submit" onsubmit="javascript:submitForm()" name="login" id="login" class="btn bg-gradient-primary-to-secondary text-white col-5 mx-2" value="선거 등록">
+                                                        <button type="button" onclick="javascript:formSubmit()"  id="Btn" class="btn bg-gradient-primary-to-secondary text-white col-5 mx-2" >선거 등록</button>
                                                     </span>
                                                     
                                                 </div>
