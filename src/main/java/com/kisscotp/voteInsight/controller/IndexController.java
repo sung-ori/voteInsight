@@ -85,4 +85,13 @@ public class IndexController {
 
         return "/candidate/registForm";
     }
+
+    @GetMapping("/passwordUpdate")
+    public String passwordUpdate(@AuthenticationPrincipal UserDetails user, Model model) {
+        
+        Users loginUser = userService.getUser(user.getUsername());
+        model.addAttribute("user", loginUser);
+
+        return "/passwordUpdateForm";
+    }
 }

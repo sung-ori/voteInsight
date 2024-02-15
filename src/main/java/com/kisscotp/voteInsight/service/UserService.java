@@ -185,4 +185,17 @@ public class UserService implements UserDetailsService {
         }
 
     }
+
+    public boolean passwordUpdate(String studentid, String password) {
+        
+        Users user = this.getUser(studentid);
+
+        user.setPassword(encoder.encode(password));
+
+        Users checkUser = userRepo.save(user);
+
+        boolean result = user.equals(checkUser);
+
+        return result;
+    }
 }

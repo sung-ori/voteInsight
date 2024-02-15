@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kisscotp.voteInsight.domain.Users;
 import com.kisscotp.voteInsight.domain.enums.GroupType;
@@ -73,4 +74,12 @@ public class UserController {
         return "redirect:/user/list";
     }
     
+    @PostMapping("/passwordUpdate")
+    @ResponseBody
+    public boolean passwordUpdate(@AuthenticationPrincipal UserDetails user, String password) {
+        
+        boolean result = service.passwordUpdate(user.getUsername(), password);
+
+        return result;
+    }
 }
