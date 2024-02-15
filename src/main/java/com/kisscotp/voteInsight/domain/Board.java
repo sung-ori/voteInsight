@@ -2,7 +2,6 @@ package com.kisscotp.voteInsight.domain;
 
 import java.time.LocalDateTime;
 
-import groovy.transform.builder.Builder;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -48,7 +47,6 @@ public class Board {
     @Column
     private LocalDateTime       updatetime;         // 수정 시간
 
- 
 
     public Board(String title, String contents, String username) {
         this.title = title;

@@ -46,7 +46,7 @@
                                                         <a th:href="@{'view?boardidx=' + ${board.boardidx}}" th:text="${board.title}">제목입니다</a>
                                                     </td>
                                                     <td th:text="${board.username}">관리자</td>
-                                                    <td th:text="${board.createtime}">2024.02.01</td>
+                                                    <td th:text="${board.createtime.year}+'년 '+${board.createtime.monthValue}+'월 '+${board.createtime.dayOfMonth} +'일'">2024.02.01</td>
                                                 </tr>
                                             </tbody>
                                         </table>

@@ -181,7 +181,7 @@ class VoteInsightApplicationTests {
 			System.out.println(i+"회 실시");
 		}
 	}
-
+	
 	// @Test
 	// void createElection() {
 	// 	Election election = new Election();
