@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.kisscotp.voteInsight.domain.Users;
+import com.kisscotp.voteInsight.domain.enums.GroupType;
 
 /*
  * JpaReopsitory가 제공하는 기본 메서드
@@ -32,4 +33,7 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
     Page<Users> findByNameContaining(String name, Pageable pageable);
 
     List<Users> findByStudentidContaining(String studentid);
+    
+    int countByGrouptype(GroupType grouptype);
+
 }

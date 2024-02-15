@@ -102,4 +102,28 @@ public class VoteController {
          
          return "/vote/resultView";
     }
+
+    //현재 선거 현황 퍼센테이지 
+    @GetMapping("/percentage")
+    public String votePercentage(@AuthenticationPrincipal UserDetails user, 
+                                @RequestParam(name="electionidx", defaultValue="0") Long idx,
+                                Model model) {
+
+            if(user != null) {
+             Users loginUser = userService.getUser(user.getUsername());
+             model.addAttribute("user", loginUser);
+                }
+
+        double percentage = service.votePercentage(idx);
+        
+       
+        model.addAttribute("percentage", percentage);
+
+        Election election = electionService.electionview(idx);
+        model.addAttribute("election", election);
+
+ 
+    return "/vote/votePercentage";
+}
+
 }

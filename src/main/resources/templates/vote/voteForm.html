@@ -36,7 +36,8 @@
                     success : function(data) {
                         if(data == true) {
                             alert("투표 완료 됐습니다.");
-                            location.href = "http://localhost:8888/voteInsight";
+                            location.href = "http://localhost:8888/voteInsight/vote/percentage?electionidx=" + $("#electionidx").val();
+
                         }
                         else {
                             alert("투표 할 수 없습니다.");

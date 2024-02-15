@@ -3,16 +3,20 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kisscotp.voteInsight.domain.Candidate;
+import com.kisscotp.voteInsight.domain.Election;
 import com.kisscotp.voteInsight.domain.Users;
 import com.kisscotp.voteInsight.domain.Vote;
 import com.kisscotp.voteInsight.domain.dto.VoteDto;
+import com.kisscotp.voteInsight.domain.enums.GroupType;
 import com.kisscotp.voteInsight.repository.CandidateRepository;
+import com.kisscotp.voteInsight.repository.ElectionRepository;
 import com.kisscotp.voteInsight.repository.UsersRepository;
 import com.kisscotp.voteInsight.repository.VoteRepository;
 
@@ -21,17 +25,23 @@ public class VoteService {
     @Autowired
     VoteRepository voteRepo;
 
+    @Autowired
+    private UserService userService; 
+
     private final VoteRepository voteRepository;
     private final CandidateRepository candidateRepository;
     private final UsersRepository usersRepository;
+    private final ElectionRepository electionRepository;
+
 
 
 
      @Autowired
-    public VoteService(VoteRepository voteRepository, CandidateRepository candidateRepository,UsersRepository usersRepository) {
+    public VoteService(VoteRepository voteRepository, CandidateRepository candidateRepository,UsersRepository usersRepository,ElectionRepository electionRepository) {
         this.voteRepository = voteRepository;
         this.candidateRepository = candidateRepository;
         this.usersRepository = usersRepository;
+        this.electionRepository =electionRepository;
 
     }
 
@@ -110,5 +120,30 @@ public class VoteService {
 
         return result;
     }
+
+
+
+
+    //학과투표현황퍼센티지
+     public double votePercentage(Long idx) {
+        // 현재 선거에 해당하는 학과
+        Election election = electionRepository.findById(idx)
+                             .orElseThrow(() -> new NoSuchElementException("선거를 찾을 수 없습니다."));
+        GroupType electionGroupType = election.getGrouptype();
+
+        // 해당 학과의 총 사람 수
+        double countGroup = userService.countGroup(electionGroupType);
+
+        //현재 선거의 투표 수
+        int  countVote = voteRepo.countByElectionidx(idx);
+        
+        // 퍼센테이지 계산
+        if (countVote != 0) {
+            return (double) countVote / countGroup * 100;
+        } else {
+            return 0.0;
+        }
+    }
+
 }
 
