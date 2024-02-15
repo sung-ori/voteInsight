@@ -185,4 +185,11 @@ public class UserService implements UserDetailsService {
         }
 
     }
+
+    //선택학과의 전체 인원 체크
+    public int countGroup(GroupType grouptype) {
+        return userRepo.countByGrouptype(grouptype);
+    }
+ 
+    
 }

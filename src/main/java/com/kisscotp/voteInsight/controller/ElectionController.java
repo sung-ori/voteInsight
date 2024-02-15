@@ -79,7 +79,7 @@ public class ElectionController {
            model.addAttribute("user", loginUser);
        }
       
-       model.addAttribute("elections", electionService.electionlist());
+       model.addAttribute("elections", electionService.electionlistAdmin());
        
        return "/election/electionListAdmin";
    }
