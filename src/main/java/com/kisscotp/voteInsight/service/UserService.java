@@ -186,7 +186,6 @@ public class UserService implements UserDetailsService {
 
     }
 
-<<<<<<< HEAD
     public boolean passwordUpdate(String studentid, String password) {
         
         Users user = this.getUser(studentid);
@@ -199,12 +198,10 @@ public class UserService implements UserDetailsService {
 
         return result;
     }
-=======
     //선택학과의 전체 인원 체크
     public int countGroup(GroupType grouptype) {
         return userRepo.countByGrouptype(grouptype);
     }
  
     
->>>>>>> 9f4deedb7dd63b003650bfae2aee5f24dfeabfe4
 }
