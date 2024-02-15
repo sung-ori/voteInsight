@@ -79,7 +79,6 @@ public class VoteService {
   
     
 
-
     public boolean vote(Users voteUser,VoteDto dto) {
         // 투표 여부
         boolean isVote = false;
