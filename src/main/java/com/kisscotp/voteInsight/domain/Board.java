@@ -2,6 +2,8 @@ package com.kisscotp.voteInsight.domain;
 
 import java.time.LocalDateTime;
 
+import com.kisscotp.voteInsight.domain.dto.BoardDto;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,6 +29,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Board {
     
     @Id
@@ -69,5 +73,15 @@ public class Board {
         this.username = username;
         this.updatetime = LocalDateTime.now();
     }    
-
+    public static Board toEntity(BoardDto dto) {
+        return Board.builder()
+                .boardidx(dto.getBoardidx())
+                .title(dto.getTitle())
+                .contents(dto.getContents())
+                .username(dto.getUsername())
+                .createtime(dto.getCreatetime())
+                .updatetime(dto.getUpdatetime())
+                .build();
+    }
+    
 }

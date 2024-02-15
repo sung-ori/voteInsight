@@ -8,9 +8,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.kisscotp.voteInsight.domain.Board;
+import com.kisscotp.voteInsight.domain.Candidate;
 import com.kisscotp.voteInsight.domain.Users;
 import com.kisscotp.voteInsight.domain.enums.GroupType;
 import com.kisscotp.voteInsight.repository.BoardRepository;
+import com.kisscotp.voteInsight.repository.CandidateRepository;
 import com.kisscotp.voteInsight.repository.ElectionRepository;
 import com.kisscotp.voteInsight.service.UserService;
 
@@ -33,6 +35,9 @@ class VoteInsightApplicationTests {
 
 	@Autowired
 	PasswordEncoder encoder;
+
+	@Autowired
+	CandidateRepository candiRepo;
 
 	//  @Test
 	//  void saveUsersTest() {
@@ -182,12 +187,22 @@ class VoteInsightApplicationTests {
 		}
 	}
 	
-	// @Test
-	// void createElection() {
-	// 	Election election = new Election();
+	@Test
+	public void createCandidate() {
+		String[] std = {"001","002","003","004","005"};
+		String[] img = {"1","2","3","4","5"};
+		Long[]	num = {1L,2L,3L,4L,5L};
+		for (int i = 0; i < 5; i++) {
+			String studentid = "201806";
 
-	// 	election.setCreatedate(LocalDateTime.now());
-	// 	election.setGrouptype(GroupType.ACCOUNTING);
-	// 	election.set
-	// }
+			Candidate candi = new Candidate();
+			
+			candi.setCandinumber(num[i]);
+			candi.setElectionidx(11L);
+			candi.setImgpath(img[i]+".jpg");
+			candi.setUseridx(userService.getUser(studentid + std[i]).getUseridx());
+
+			candiRepo.save(candi);
+		}
+	}
 }
