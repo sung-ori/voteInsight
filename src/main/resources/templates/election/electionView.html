@@ -59,7 +59,7 @@
                     <!-- 버튼 그룹 -->
                     <div class="mt-3 d-flex justify-content-between">
                         <!-- 목록 버튼 -->
-                        <a th:href="@{/election/list}" class="btn btn-primary">목록</a>
+                        <a th:href="@{/election/listUser}" class="btn btn-primary">목록</a>
 
                         <!-- 투표하기 버튼 -->
                         <div th:if="${user.grouptype} != ${election.grouptype}">
