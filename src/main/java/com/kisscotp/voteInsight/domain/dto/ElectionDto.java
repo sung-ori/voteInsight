@@ -3,7 +3,6 @@ package com.kisscotp.voteInsight.domain.dto;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import com.kisscotp.voteInsight.domain.Election;
 import com.kisscotp.voteInsight.domain.enums.GroupType;
 
 import lombok.AllArgsConstructor;
@@ -32,38 +31,9 @@ public class ElectionDto {
 
     private LocalDate   startdate;      // 투표 시작일
 
-    private LocalDate   deadline;        // 투표 종료일
+    private LocalDate   daeline;        // 투표 종료일
 
     private LocalDate   enddate;        // 열람 마감일
 
-    public static ElectionDto toDto(Election entity) {
-        return ElectionDto.builder()
-                .electionidx(entity.getElectionidx())
-                .title(entity.getTitle())
-                .grouptype(entity.getGrouptype())
-                .posterpath(entity.getPosterpath())
-                .progress(entity.getProgress())
-                .createdate(entity.getCreatedate())
-                .startdate(entity.getStartdate())
-                .deadline(entity.getDeadline())
-                .enddate(entity.getEnddate())
-                .build();
-                
-    }
-    
-    public static ElectionDto toDto(Election entity) {
-        return ElectionDto.builder()
-                .electionidx(entity.getElectionidx())
-                .title(entity.getTitle())
-                .grouptype(entity.getGrouptype())
-                .posterpath(entity.getPosterpath())
-                .progress(entity.getProgress())
-                .createdate(entity.getCreatedate())
-                .startdate(entity.getStartdate())
-                .deadline(entity.getDeadline())
-                .enddate(entity.getEnddate())
-                .build();
-                
-    }
     
 }

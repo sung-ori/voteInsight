@@ -20,9 +20,9 @@
                     searchSubmit
                 );
             $(document).on("click",".selectBtn",function() {
-                alert("클릭됨");
+                // alert("클릭됨");
                 let idx = $(this).val();
-                alert(idx);
+                // alert(idx);
                 selectUser(idx);
             })
                
@@ -42,7 +42,7 @@
                         },
                         success: function(data) {
                             
-                            alert("일단 성공!")
+                            // alert("일단 성공!")
                             if($.isEmptyObject(data)) {
                                 alert("해당하는 학생이 존재하지 않습니다.");
                             }

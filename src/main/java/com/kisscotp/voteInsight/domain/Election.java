@@ -56,7 +56,7 @@ public class Election {
     private LocalDate   startdate;      // 투표 시작일
 
     @Column
-    private LocalDate   deadline;        // 투표 종료일
+    private LocalDate   daeline;        // 투표 종료일
 
     @Column
     private LocalDate   enddate;        // 열람 마감일
@@ -70,7 +70,7 @@ public class Election {
         this.progress = requestDto.getProgress();
         this.createdate = LocalDateTime.now(); 
         this.startdate = requestDto.getStartdate();
-        this.deadline = requestDto.getDaeline();
+        this.daeline = requestDto.getDaeline();
         this.enddate = requestDto.getEnddate();
     }
 
@@ -98,7 +98,7 @@ public void update(String title, GroupType grouptype, LocalDateTime createdate, 
             this.grouptype = grouptype;
             this.createdate=createdate;
             this.startdate = startdate;
-            this.deadline = daeline;
+            this.daeline = daeline;
             this.enddate = enddate;
         
 
