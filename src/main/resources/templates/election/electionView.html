@@ -49,6 +49,10 @@
                             <td th:text="${election.grouptype.value}">투표 대상 그룹</td>
                         </tr>
                         <tr>
+                            <th scope="row">선거기간</th>
+                            <td th:text="${election.startdate + '~' + election.daeline}">선거기간</td>
+                        </tr>
+                        <tr>
                             <th scope="row">진행 상황</th>
                             <td th:text="${election.progressKorean}">알 수 없음</td>
                         </tr>
@@ -67,7 +71,9 @@
                         </div>
                         <div th:if="${user.grouptype} == ${election.grouptype}">
                             <a th:if="${isVote} == false" th:href="@{'/vote?electionidx=' + ${election.electionidx}}" class="btn btn-success">투표하기</a>
-                            <a th:if="${isVote} == true"  class="btn btn-danger">투표완료</a>
+                            <a th:if="${isVote} == true" th:href="@{/vote/percentage(electionidx=${election.electionidx})}" class="btn btn-danger">투표완료</a>
+
+
                             
                         </div>
                     </div>

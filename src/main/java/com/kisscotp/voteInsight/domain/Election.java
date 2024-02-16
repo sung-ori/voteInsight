@@ -79,13 +79,13 @@ public class Election {
    public String getProgressKorean() {
     switch (progress) {
         case '0':
-            return "준비중";
+            return "투표예정";
         case '1':
-            return "진행중";
+            return "투표중";
         case '2':
-            return "투표 종료 열람 가능";
+            return "선거종료";
         case '3':
-            return "열람기간 만료";
+            return "열람만료";
         default:
             return "알 수 없음";
     }

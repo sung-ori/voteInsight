@@ -35,8 +35,8 @@ public class ElectionService {
         List<Election> list =  electionRepository.findAll();
         List<Election> electionList = new ArrayList<>();
 
-        for(Election election : list) {
-            if(election.getProgress() == '1') {
+        for (Election election : list) {
+            if (election.getProgress() == '1' || election.getProgress() == '0') {
                 electionList.add(election);
             }
         }
