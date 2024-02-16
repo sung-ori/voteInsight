@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ElectionProgress {
     R("준비중"),
-    G("진행중"),
+    G("투표중"),
     V("열람 가능"),
     E("종료");
 

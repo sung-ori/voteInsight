@@ -33,6 +33,30 @@
             <div class="col-lg-8">
                 <!-- Detail Section-->
                 <section>
+                    <table class="table">
+                        <thead>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">선거 제목</th>
+                            <td th:text="${election.title}">선거 제목</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>
+                                <img th:src="@{${'/posters/' + election.posterpath}}" alt="포스터 이미지" style="max-width: 250px; max-height: 250px;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">투표 그룹</th>
+                            <td th:text="${election.grouptype.value}">투표 대상 그룹</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">선거기간</th>
+                            <td th:text="${election.startdate + '~' + election.daeline}">선거기간</td>
+                        </tr>
+                        </tbody>
+
                     <div id="winner" class="mt-3 text-center" style="font-size: 24px; color: #FF5733; font-weight: bold;"> 당선자 </div>
                     
                      <div class="card h-100">
