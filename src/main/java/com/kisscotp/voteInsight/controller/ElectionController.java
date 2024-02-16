@@ -1,6 +1,8 @@
 package com.kisscotp.voteInsight.controller;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -42,8 +44,11 @@ public class ElectionController {
            Users loginUser = userService.getUser(user.getUsername());
            model.addAttribute("user", loginUser);
        }
-      
-       model.addAttribute("elections", electionService.electionlist());
+       Map<String,List> map = electionService.electionlist();
+       List<Election> ready = map.get("ready");
+       List<Election> elections = map.get("elections");
+       model.addAttribute("elections", elections);
+       model.addAttribute("ready", ready);
        
        return "/election/electionlistUser";
     }

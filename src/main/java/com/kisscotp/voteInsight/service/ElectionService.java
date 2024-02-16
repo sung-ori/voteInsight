@@ -3,7 +3,9 @@ package com.kisscotp.voteInsight.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -31,17 +33,24 @@ public class ElectionService {
     String defaultPath;
 
     //선거 목록-유저용
-    public List<Election> electionlist() {
+    public Map<String, List> electionlist() {
         List<Election> list =  electionRepository.findAll();
         List<Election> electionList = new ArrayList<>();
+        List<Election> electionListReady = new ArrayList<>();
+        Map<String, List> map = new HashMap<>();
 
         for (Election election : list) {
-            if (election.getProgress() == '1' || election.getProgress() == '0') {
+            if (election.getProgress() == '1') {
                 electionList.add(election);
             }
+            if(election.getProgress() == '0') {
+                electionListReady.add(election);
+            }
         }
-        
-        return  electionList;
+        map.put("ready", electionListReady);
+        map.put("elections",electionList);
+
+        return  map;
     }
 
     //선거 목록-관리자용
